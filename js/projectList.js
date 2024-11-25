@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Función para cargar los proyectos
+
   function loadProjects(statusFilter = "") {
     const projectsList = document.getElementById("projects-list");
     projectsList.innerHTML = ""; // Limpiamos la lista antes de cargar
@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const projects = data.result;
 
-        // Filtrar proyectos por estado
         const filteredProjects = statusFilter
           ? projects.filter((project) => project.status === (statusFilter === "Activos"))
           : projects;
@@ -40,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Cambiar estado de un proyecto (Activar/Desactivar)
   window.toggleStatus = function (projectId) {
     const projectDto = { id: projectId };
 
@@ -54,9 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(response => response.json())
       .then(data => {
         if (data.type === "SUCCESS") {
-          loadProjects(); // Recargamos la lista después de cambiar el estado
+          loadProjects();
         } else {
-          alert(data.text); // Mostramos el mensaje de error si no se pudo cambiar el estado
+          alert(data.text);
         }
       })
       .catch(error => {
@@ -65,16 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   };
 
-  // Cargar proyectos al inicio
   loadProjects();
 
-  // Filtrado de proyectos por estado
   document.getElementById("Categoria").addEventListener("change", function (event) {
     const statusFilter = event.target.value;
     loadProjects(statusFilter);
   });
 
-  // Función para cargar categorías y clientes para los selects
   function loadCategoriesAndClients() {
     return Promise.all([
       fetch("http://localhost:8080/projectCat/active")
@@ -108,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Función para editar un proyecto
   window.editProject = function (projectId, button) {
     const row = button.closest('tr');
     const cells = row.querySelectorAll('td');
@@ -132,32 +126,42 @@ document.addEventListener("DOMContentLoaded", function () {
       category: categoryCell.textContent,
     };
 
-    // Reemplazar celdas con inputs/selects
+    // Convertir celdas a campos de entrada
     nameCell.innerHTML = `<input type="text" class="form-control" value="${originalData.name}" />`;
     abbreviationCell.innerHTML = `<input type="text" class="form-control" value="${originalData.abbreviation}" />`;
     descriptionCell.innerHTML = `<input type="text" class="form-control" value="${originalData.description}" />`;
 
     loadCategoriesAndClients().then(data => {
+      // Crear select para categorías
       const categorySelect = document.createElement('select');
       categorySelect.classList.add('form-select');
+      let categoryId = null;
       data.categories.forEach(category => {
         const option = document.createElement('option');
         option.value = category.id;
         option.textContent = category.name;
         categorySelect.appendChild(option);
+        if (category.name === originalData.category) {
+          categoryId = category.id; // Asignamos el id de la categoría correspondiente
+        }
       });
-      categorySelect.value = originalData.category;
+      categorySelect.value = categoryId;  // Establecer el valor correcto al `select`
       categoryCell.innerHTML = categorySelect.outerHTML;
 
+      // Crear select para clientes
       const customerSelect = document.createElement('select');
       customerSelect.classList.add('form-select');
+      let customerId = null;
       data.customers.forEach(customer => {
         const option = document.createElement('option');
         option.value = customer.id;
         option.textContent = customer.name;
         customerSelect.appendChild(option);
+        if (customer.name === originalData.customer) {
+          customerId = customer.id; // Asignamos el id del cliente correspondiente
+        }
       });
-      customerSelect.value = originalData.customer;
+      customerSelect.value = customerId;  // Establecer el valor correcto al `select`
       customerCell.innerHTML = customerSelect.outerHTML;
     });
 
@@ -190,17 +194,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const updatedCategory = categoryCell.querySelector('select').value;
 
       const updatedProject = {
-        id: projectId,
+        id: projectId, // Incluir el ID en el JSON
         name: updatedName,
         abbreviation: updatedAbbreviation,
         description: updatedDescription,
-        customerId: parseInt(updatedCustomer),
-        projectCategoryId: parseInt(updatedCategory),
+        customerId: parseInt(updatedCustomer), // Usar customerId según el backend
+        projectCategoryId: parseInt(updatedCategory), // Usar projectCategoryId según el backend
         status: true // Suponiendo que el proyecto está activo
       };
 
-      // Realizar el PUT para guardar los cambios
-      fetch(`http://localhost:8080/projects/${projectId}`, {
+      // Realizar el PUT para guardar los cambios en la nueva ruta
+      fetch(`http://localhost:8080/projects/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -209,16 +213,16 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then(response => response.json())
         .then(data => {
-          if (data.type === 'SUCCESS') {
+          if (data.type === 'SUCCESS') { // Asegúrate de que la respuesta tenga esta propiedad
             // Actualizar la interfaz después de guardar
             nameCell.textContent = updatedName;
             abbreviationCell.textContent = updatedAbbreviation;
             descriptionCell.textContent = updatedDescription;
-            customerCell.textContent = updatedCustomer;
-            categoryCell.textContent = updatedCategory;
+            customerCell.textContent = updatedCustomer; // Usar el nombre o ID, según sea necesario
+            categoryCell.textContent = updatedCategory; // Usar el nombre o ID, según sea necesario
 
-            button.textContent = "Editar"; // Volver al estado de "Editar"
-            cancelButton.remove(); // Eliminar el botón Cancelar
+            // Recargar la página para aplicar los cambios
+            window.location.reload(); // Esto recargará toda la página
           } else {
             alert('Error al guardar los cambios');
           }
@@ -229,4 +233,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   };
+
+
 });
