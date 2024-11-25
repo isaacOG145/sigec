@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tareas</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/list.css">
+
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main class="container-fluid ">
+  <h2>Lista de Usuarios</h2>
+
+  <div class="d-flex justify-content-around w-100">
+
+    <div id="buscar-container" class="mt-5">
+      <label for="Categoria" class="label-buscar">Buscar por:</label>
+      <select id="Categoria" name="Categoria" required class="form-select">
+        <option value="">Selecciona una opción</option>
+        <option value="Activos">Activos</option>
+        <option value="Inactivos">Todos</option>
+      </select>
+    </div>
+
+    <div class=" mt-5">
+      <a href="/views/userRegister.html" class="nav-link btn-agregar">
+        <span>Agregar un nuevo usuario</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+        </svg>
+      </a>
+    </div>
+
+
+
+  </div>
+
+  <!-- Tabla de contenido -->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Correo electrónico</th>
+      <th>Teléfono</th>
+      <th>Rol</th>
+      <th>Status</th>
+      <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <!-- Switch -->
+        <input type="checkbox" class="switch">
+      </td>
+      <td>
+        <!-- Botón Editar -->
+        <button class="btn-edit">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+          </svg>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+
+<!-- Script -->
+<script src="/js/loadHeader.js"></script>
+</body>
+</html>

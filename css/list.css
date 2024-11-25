@@ -1,0 +1,90 @@
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+h2 {
+  color: #f0f0f0;
+  margin-bottom: 20px;
+}
+
+/* Tabla */
+.table {
+  width: 75%;
+  border-collapse: collapse;
+  background-color: white;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 70px;
+}
+
+th, td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+thead {
+  background-color: #8527c3fd;
+  color: white;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #8527c383;
+  border-radius: 5px;
+}
+
+/* Estilos de los botones de Activar/Desactivar */
+button.btn-sm {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-danger {
+  background-color: #e74c3c; /* Rojo */
+}
+
+button.btn-success {
+  background-color: #2ecc71; /* Verde */
+}
+
+button.btn-sm:hover {
+  opacity: 0.9;
+}
+
+.btn-edit svg {
+  width: 18px;
+  height: 18px;
+  fill: #000;
+}
+
+.btn-edit:hover svg {
+  fill: #007bff;
+  width: 28px;
+  height: 28px;
+}
+
+
+
+

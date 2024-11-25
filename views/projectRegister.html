@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <title>Customers</title>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div id="header-placeholder"></div>
+    <main class="main-content">
+      <form id="project-form" class="mt-5">
+        <h2>Registro de Proyecto</h2>
+
+        <input type="hidden" id="P.id" name="id"> <!-- Campo oculto para el id del proyecto -->
+
+        <label for="P.nombre">Nombre:</label>
+        <input type="text" id="P.nombre" name="name" required>
+        <br><br>
+
+        <label for="P.abreviatura">Abreviatura:</label>
+        <input type="text" id="P.abreviatura" name="abbreviation" required>
+        <br><br>
+
+        <label for="P.descripción">Descripción:</label>
+        <input type="text" id="P.descripción" name="description" required>
+        <br><br>
+
+        <label for="P.categoria">Categoría:</label>
+        <select id="P.categoria" name="projectCategoryId" required>
+          <option value="">Selecciona una opción</option>
+        </select>
+        <br><br>
+
+        <label for="P.cliente">Cliente:</label>
+        <select id="P.cliente" name="customerId" required>
+          <option value="">Selecciona una opción</option>
+        </select>
+        <br><br>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </form>
+
+    </main>
+  </div>
+
+<script src="/js/loadHeader.js"></script>
+<script src="/js/registerProject.js"></script>
+</body>
+</html>

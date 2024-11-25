@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/form.css">
+
+  <title>Customers</title>
+</head>
+<body>
+<div class="container-fluid">
+  <div id="header-placeholder"></div>
+  <main class="main-content">
+    <form class="mt-5" action="/submit" method="post">
+      <h2>Registrar de Usuario</h2>
+
+      <label for="U.password">Nueva Contraseña:</label>
+      <input type="password" id="U.password" name="password" required>
+      <br><br>
+
+      <label for="U.password">Confirme su nueva contraseña:</label>
+      <input type="password" id="U.Cpassword" name="password" required>
+      <br><br>
+
+      <a href="Lista_Proyectos.html" class="nav-link">Cambiar</a>
+
+    </form>
+  </main>
+</div>
+<script src="/js/loadHeader.js"></script>
+</body>
+</html>
