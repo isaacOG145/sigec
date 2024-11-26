@@ -25,22 +25,21 @@ document.getElementById('userForm').addEventListener('submit', function(event) {
     }
   };
 
-  // Configurar la solicitud fetch
   fetch('http://localhost:8080/user/save', {
-    method: 'POST', // Usar el método POST
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json', // El cuerpo de la solicitud estará en JSON
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(userData) // Convertir el objeto a JSON
+    body: JSON.stringify(userData)
   })
-    .then(response => response.json()) // Obtener la respuesta en formato JSON
+    .then(response => response.json())
     .then(data => {
       if (data.type === 'SUCCESS') {
         alert('Usuario registrado exitosamente');
-        // Aquí puedes redirigir al usuario a otra página si lo deseas
-        // window.location.href = "/otraPagina";
+
+        window.location.href = "../views/userRegister.html";
       } else {
-        alert('Error: ' + data.message); // Mostrar mensaje de error
+        alert('Error: ' + data.message);
       }
     })
     .catch(error => {

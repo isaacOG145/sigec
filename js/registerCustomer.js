@@ -21,7 +21,7 @@ function submitForm() {
       if (data.type === 'SUCCESS') {
         alert('Cliente registrado exitosamente');
 
-        window.location.href = '/clientes';
+        window.location.href = '../views/customerList.html';
       } else {
         alert('Error al registrar el cliente: ' + data.message);
       }

@@ -29,7 +29,7 @@ form.addEventListener('submit', async (event) => {
 
       alert('Categoría registrada con éxito');
 
-      window.location.href = '/listaCategorias';
+      window.location.href = '../views/categoryList.html';
     } else {
 
       alert(`Error: ${result.message || 'Hubo un problema al registrar la categoría'}`);
