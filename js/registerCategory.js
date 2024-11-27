@@ -1,12 +1,29 @@
 const form = document.getElementById('categoryForm');
 
+function showMessage(type, message) {
+  const messageElement = document.getElementById("message");
+  const messageText = document.getElementById("message-text");
+
+  messageElement.className = `alert alert-${type}`;
+  messageText.textContent = message;
+
+  messageElement.style.display = 'block';
+
+  setTimeout(() => {
+    messageElement.style.display = 'none';
+  }, 5000);
+}
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-
   const nombre = document.getElementById('PC.nombre').value;
   const descripcion = document.getElementById('PC.descripcion').value;
+
+  if (!nombre || !descripcion) {
+    showMessage('warning', 'Los campos nombre y descripción no pueden estar vacíos.');
+    return;
+  }
 
   const data = {
     name: nombre,
@@ -14,7 +31,6 @@ form.addEventListener('submit', async (event) => {
   };
 
   try {
-
     const response = await fetch('http://localhost:8080/projectCat/save', {
       method: 'POST',
       headers: {
@@ -27,15 +43,15 @@ form.addEventListener('submit', async (event) => {
 
     if (response.ok) {
 
-      alert('Categoría registrada con éxito');
+      showMessage(result.type.toLowerCase(), result.text);
 
-      window.location.href = '../views/categoryList.html';
+      setTimeout(() => {
+        window.location.href = '../views/categoryList.html';
+      }, 2000);
     } else {
-
-      alert(`Error: ${result.message || 'Hubo un problema al registrar la categoría'}`);
+      showMessage('danger', result.text || 'Hubo un problema al registrar la categoría');
     }
   } catch (error) {
-
-    alert('Error al enviar los datos. Intenta nuevamente más tarde.');
+    showMessage('danger', 'Error al enviar los datos. Intenta nuevamente más tarde.');
   }
 });

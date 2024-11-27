@@ -6,39 +6,45 @@
   <title>Registrar Cliente</title>
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/form.css">
-
 </head>
 <body>
-<div class="container-fluid">
-  <div id="header-placeholder"></div>
+
+<div id="header-placeholder"></div>
+<div class="container mt-5">
+
   <main class="main-content">
 
-    <form class="mt-5" id="customer-form">
+    <form id="customer-form">
       <h2>Registro de Cliente</h2>
 
       <div class="mb-3">
-        <label for="name" class="form-label">Nombre:</label>
-        <input type="text" id="name" name="name" class="form-control" required>
+        <label for="name" class="form-label">Nombre <span class="asterisco">*</span></label>
+        <input type="text" id="name" name="name" class="form-control">
       </div>
 
       <div class="mb-3">
-        <label for="email" class="form-label">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" class="form-control" required>
+        <label for="email" class="form-label">Correo Electrónico <span class="asterisco">*</span></label>
+        <input type="email" id="email" name="email" class="form-control">
       </div>
 
       <div class="mb-3">
-        <label for="phone" class="form-label">Teléfono:</label>
-        <input type="tel" id="phone" name="phone" class="form-control" required>
+        <label for="phone" class="form-label">Teléfono <span class="asterisco">*</span></label>
+        <input type="tel" id="phone" name="phone" class="form-control">
       </div>
 
-      <button type="button" class="btn btn-primary" onclick="submitForm()">Registrar</button>
+      <button type="submit" class="btn btn-primary">Registrar</button>
+
+      <div id="message" class="alert alert-dismissible mt-3" role="alert" style="display:none;">
+        <span id="message-text"></span>
+      </div>
     </form>
 
   </main>
 </div>
 
-  <script src="../js/loadHeader.js"></script>
+<script src="../js/loadHeader.js"></script>
+<script src="../js/registerCustomer.js"></script>
 
-  <script src="../js/registerCustomer.js"> </script>
 </body>
 </html>
+

@@ -8,40 +8,71 @@
   <title>Registrar Usuario</title>
 </head>
 <body>
-<div class="container-fluid">
+
   <div id="header-placeholder"></div>
+
+<div class="container mt-5">
+
   <main class="main-content">
-    <form id="userForm" class="mt-5">
+    <form id="userForm">
       <h2>Registrar Usuario</h2>
 
-      <label for="U.nombre">Nombre:</label>
-      <input type="text" id="U.nombre" name="nombre" required>
-      <br><br>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="U.nombre" class="form-label">Nombre <span class="asterisco">*</span></label>
+          <input type="text" id="U.nombre" name="nombre" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="U.apellidos" class="form-label">Apellidos <span class="asterisco">*</span></label>
+          <input type="text" id="U.apellidos" name="apellidos" class="form-control" required>
+        </div>
+      </div>
 
-      <label for="U.apellidos">Apellidos:</label>
-      <input type="text" id="U.apellidos" name="apellidos" required>
-      <br><br>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="U.email" class="form-label">Correo Electrónico <span class="asterisco">*</span></label>
+          <input type="email" id="U.email" name="email" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="U.telefono" class="form-label">Teléfono <span class="asterisco">*</span></label>
+          <input type="tel" id="U.telefono" name="telefono" class="form-control" required>
+        </div>
+      </div>
 
-      <label for="U.email">Correo Electrónico:</label>
-      <input type="email" id="U.email" name="email" required>
-      <br><br>
+      <!-- Fila para Contraseña (toma toda la fila) -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <label for="U.password" class="form-label">Contraseña <span class="asterisco">*</span></label>
+          <input type="password" id="U.password" name="password" class="form-control" required>
+        </div>
+      </div>
 
-      <label for="U.telefono">Teléfono:</label>
-      <input type="tel" id="U.telefono" name="telefono" required>
-      <br><br>
+      <!-- Fila para Confirmación de Contraseña (toma toda la fila) -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <label for="U.Cpassword" class="form-label">Confirme su contraseña <span class="asterisco">*</span></label>
+          <input type="password" id="U.Cpassword" name="Cpassword" class="form-control" required>
+        </div>
+      </div>
 
-      <label for="U.password">Contraseña:</label>
-      <input type="password" id="U.password" name="password" required>
-      <br><br>
+      <!-- Fila para el campo "Rol" (toma toda la fila) -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <label for="U.rol" class="form-label">Rol <span class="asterisco">*</span></label>
+          <select id="U.rol" name="rol" class="form-control" required>
+            <option value="">Selecciona un rol</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Usuario">Usuario</option>
+          </select>
+        </div>
+      </div>
 
-      <label for="U.Cpassword">Confirme su contraseña:</label>
-      <input type="password" id="U.Cpassword" name="Cpassword" required>
-      <br><br>
-
+      <!-- Botón de Envío -->
       <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
   </main>
 </div>
+
 <script src="../js/loadHeader.js"></script>
 <script src="../js/registerUser.js"></script>
 </body>

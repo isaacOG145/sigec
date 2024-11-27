@@ -5,49 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/form.css">
-  <title>Customers</title>
+  <title>Registrar Proyecto</title>
 </head>
 <body>
 
-  <div class="container-fluid">
-    <div id="header-placeholder"></div>
-    <main class="main-content">
-      <form id="project-form" class="mt-5">
-        <h2>Registro de Proyecto</h2>
+<div id="header-placeholder"></div>
 
-        <input type="hidden" id="P.id" name="id"> <!-- Campo oculto para el id del proyecto -->
+<div class="container mt-5">
 
-        <label for="P.nombre">Nombre:</label>
-        <input type="text" id="P.nombre" name="name" required>
-        <br><br>
+  <main class="main-content">
+    <form id="project-form">
+      <h2>Registro de Proyecto</h2>
 
-        <label for="P.abreviatura">Abreviatura:</label>
-        <input type="text" id="P.abreviatura" name="abbreviation" required>
-        <br><br>
+      <input type="hidden" id="P.id" name="id">
 
-        <label for="P.descripción">Descripción:</label>
-        <input type="text" id="P.descripción" name="description" required>
-        <br><br>
+      <div class="mb-3">
+        <label for="P.nombre" class="form-label">Nombre <span class="asterisco">*</span></label>
+        <input type="text" id="P.nombre" name="name" class="form-control">
+      </div>
 
-        <label for="P.categoria">Categoría:</label>
-        <select id="P.categoria" name="projectCategoryId" required>
+      <div class="mb-3">
+        <label for="P.abreviatura" class="form-label">Abreviatura <span class="asterisco">*</span></label>
+        <input type="text" id="P.abreviatura" name="abbreviation" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="P.descripción" class="form-label">Descripción <span class="asterisco">*</span></label>
+        <input type="text" id="P.descripción" name="description" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="P.categoria" class="form-label">Categoría <span class="asterisco">*</span></label>
+        <select id="P.categoria" name="projectCategoryId" class="form-control">
           <option value="">Selecciona una opción</option>
         </select>
-        <br><br>
+      </div>
 
-        <label for="P.cliente">Cliente:</label>
-        <select id="P.cliente" name="customerId" required>
+      <div class="mb-3">
+        <label for="P.cliente" class="form-label">Cliente <span class="asterisco">*</span></label>
+        <select id="P.cliente" name="customerId" class="form-control">
           <option value="">Selecciona una opción</option>
         </select>
-        <br><br>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Registrar</button>
-      </form>
-
-    </main>
-  </div>
+      <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+  </main>
+</div>
 
 <script src="../js/loadHeader.js"></script>
 <script src="../js/registerProject.js"></script>
 </body>
 </html>
+
