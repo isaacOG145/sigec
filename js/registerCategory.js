@@ -21,7 +21,7 @@ form.addEventListener('submit', async (event) => {
   const descripcion = document.getElementById('PC.descripcion').value;
 
   if (!nombre || !descripcion) {
-    showMessage('warning', 'Los campos nombre y descripción no pueden estar vacíos.');
+    showMessage('warning', 'Debes llenar todos los campos obligatorios.');
     return;
   }
 
@@ -41,17 +41,19 @@ form.addEventListener('submit', async (event) => {
 
     const result = await response.json();
 
-    if (response.ok) {
+    if (response.ok && result.type === 'SUCCESS') {
 
       showMessage(result.type.toLowerCase(), result.text);
+      document.getElementById('PC.nombre').value = '';
+      document.getElementById('PC.descripcion').value = '';
 
-      setTimeout(() => {
-        window.location.href = '../views/categoryList.html';
-      }, 2000);
     } else {
+
       showMessage('danger', result.text || 'Hubo un problema al registrar la categoría');
     }
   } catch (error) {
     showMessage('danger', 'Error al enviar los datos. Intenta nuevamente más tarde.');
   }
 });
+
+
