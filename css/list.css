@@ -16,8 +16,41 @@ body {
 }
 
 h2 {
-  color: #f0f0f0;
+  color: #000000;
   margin-bottom: 20px;
+}
+/* Contenedor para el selector de búsqueda */
+#buscar-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-right: 20px;
+  background-color: #8527c3fd; /* Fondo morado */
+  border-radius: 8px;
+  padding: 10px;
+  top: 120px; /* Baja el filtro cerca del formulario */
+  left: 20px; /* Pegado al borde izquierdo */
+}
+
+.label-buscar {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.form-select {
+  width: 100%;
+  height: 35px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.form-select option {
+  background-color: white;
+  color: #333;
 }
 
 /* Tabla */
@@ -85,6 +118,30 @@ button.btn-sm:hover {
   height: 28px;
 }
 
+/* Botón Agregar Cliente */
+.btn-agregar {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background-color: #8527c3fd;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
 
+.btn-agregar span {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.btn-agregar svg {
+  width: 30px;
+  height: 30px;
+}
+
+.btn-agregar:hover {
+  background-color: #6e1d9b;
+}
 
 
