@@ -6,43 +6,64 @@
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/form.css">
 
-  <title>Customers</title>
+  <title>Perfil de Usuario</title>
 </head>
 <body>
+<div id="header-placeholder"></div>
+
+
 <div class="container-fluid">
-  <div id="header-placeholder"></div>
+
   <main class="main-content">
     <form class="mt-5" action="/submit" method="post">
       <h2>Perfil</h2>
 
-      <strong>Nombre:</strong>
-      <span>Juan</span>
-      <br><br>
+      <div class="form-group">
+        <label for="nombre"><strong>Nombre:</strong></label>
+        <span id="nombre" class="form-control-plaintext"></span>
+      </div>
 
-      <strong>Apellido:</strong>
-      <span>Pérez</span>
-      <br><br>
+      <div class="form-group">
+        <label for="apellido"><strong>Apellidos:</strong></label>
+        <span id="apellido" class="form-control-plaintext"></span>
+      </div>
 
-      <strong>Correo:</strong>
-      <span>juan.perez@example.com</span>
-      <br><br>
+      <div class="form-group">
+        <label for="email"><strong>Correo electrónico:</strong></label>
+        <span id="email" class="form-control-plaintext"></span>
+      </div>
 
-      <strong>Teléfono:</strong>
-      <span>+52 123 456 7890</span>
-      <br><br>
+      <div class="form-group">
+        <label for="telefono"><strong>Teléfono:</strong></label>
+        <span id="telefono" class="form-control-plaintext"></span>
+      </div>
 
-      <strong>Contraseña:</strong>
-      <span>************</span>
-      <br><br>
+      <div class="form-group">
+        <label for="rol"><strong>Rol:</strong></label>
+        <span id="rol" class="form-control-plaintext"></span>
+      </div>
 
-      <a href="#" class="nav-link">Cambiar de contraseña</a>
-      <br>
-
-      <a href="#" class="nav-link">Cerrar sesion</a>
+      <div class="container">
+        <div class="row">
+          <div class="col-6 mb-3">
+            <button type="button" class="mod" id="change-password">Cambiar contraseña</button>
+          </div>
+          <div class="col-6 mb-3">
+            <button type="button" class="mod" id="modify-profile">Modificar Perfil</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <button type="button" class="mod" id="logout">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
 
     </form>
   </main>
 </div>
+
 <script src="../js/loadHeader.js"></script>
+<script src="../js/profile.js"></script>
 </body>
 </html>
