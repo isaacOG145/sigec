@@ -1,4 +1,5 @@
 const form = document.getElementById('categoryForm');
+const token = localStorage.getItem('jwt');
 
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
@@ -35,6 +36,7 @@ form.addEventListener('submit', async (event) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(data),
     });

@@ -5,6 +5,11 @@ const passwordInput = document.getElementById('password');
 const messageElement = document.getElementById('message');
 const messageText = document.getElementById('message-text');
 
+function isValidEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return emailRegex.test(email);
+}
+
 function showMessage(type, message) {
   messageElement.className = `alert alert-${type}`;
   messageText.textContent = message;
@@ -15,6 +20,8 @@ function showMessage(type, message) {
   }, 5000);
 }
 
+
+
 loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -23,6 +30,11 @@ loginForm.addEventListener('submit', async (event) => {
 
   if (!email || !password) {
     showMessage('warning', 'Por favor ingresa tu correo y contraseña');
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    showMessage('warning', 'Por favor ingresa un correo válido');
     return;
   }
 
@@ -42,7 +54,7 @@ loginForm.addEventListener('submit', async (event) => {
     });
 
     if (!response.ok) {
-      throw new Error('Credenciales incorrectas');
+      throw new Error('Usuario o contraseña incorrectos ');
     }
 
 
