@@ -28,12 +28,12 @@ function showMessage(type, message, email) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Obtener el correo electrónico de la URL
+
   const urlParams = new URLSearchParams(window.location.search);
-  const email = urlParams.get('email');  // Obtener el email desde los parámetros de la URL
+  const email = urlParams.get('email');
 
   if (email) {
-    // Si hay un correo, colocarlo en el campo de email
+
     document.getElementById('email').value = email;
   }
 
@@ -76,9 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('email', result.email);
         localStorage.setItem('expiration', Date.now() + result.expiration);
 
-        console.log('JWT Token:', localStorage.getItem('jwt')); // Verifica que el token se guardó correctamente.
+        console.log('JWT Token:', localStorage.getItem('jwt'));
 
-        // Redirigir al cambio de contraseña
         window.location.href = `../views/changePass.html?email=${encodeURIComponent(email)}`;
       } else {
         showMessage('danger', result.text || 'Hubo un problema al verificar el código.');
