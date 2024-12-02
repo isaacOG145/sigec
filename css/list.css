@@ -144,4 +144,14 @@ button.btn-sm:hover {
   background-color: #6e1d9b;
 }
 
+#message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 90%;
+  max-width: 600px;
+}
+
 
