@@ -1,66 +1,156 @@
-// Obtener el JWT del localStorage
-const jwt = localStorage.getItem('jwt');
+document.addEventListener("DOMContentLoaded", function () {
+  const jwt = localStorage.getItem('jwt');
+  const userId = localStorage.getItem('userId');
 
-// Verificar que el JWT esté presente
-if (!jwt) {
-  console.log("No hay JWT en el localStorage.");
-  window.location.href = "login.html"; // Redirigir si no está autenticado
-} else {
-  // Obtener el ID del usuario (si es que lo necesitas)
-  const userId = localStorage.getItem('userId'); // O bien, usa el JWT para obtener el ID
-  if (!userId) {
-    console.log("No hay ID de usuario en el localStorage.");
-    window.location.href = "login.html"; // Redirigir si no hay userId
+  if (!jwt || !userId) {
+    console.log("No hay JWT o ID de usuario en el localStorage.");
+    window.location.href = "../index.html";
+    return;
   }
 
-  // Realizar la solicitud GET para obtener los datos del usuario
-  fetch(`http://localhost:8080/user/${userId}`, {
+  function showMessage(type, message) {
+    const messageElement = document.getElementById("message");
+    const messageText = document.getElementById("message-text");
+
+    messageElement.className = `alert alert-${type}`;
+    messageText.textContent = message;
+
+    messageElement.style.display = 'block';
+
+    setTimeout(() => {
+      messageElement.style.display = 'none';
+    }, 5000);
+  }
+
+  // Cargar datos del usuario
+  fetch(`http://localhost:8080/user/findId/${userId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${jwt}`, // Incluir el JWT para la autenticación
+      'Authorization': `Bearer ${jwt}`,
     },
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Error al obtener los datos del usuario");
-      }
-      return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-      // Verificar que la respuesta contiene los datos en la propiedad 'result'
       if (data.type === 'SUCCESS' && data.result) {
-        // Llenar los campos con los datos del usuario
-        document.getElementById('nombre').textContent = data.result.name;
-        document.getElementById('apellido').textContent = data.result.lastName;
-        document.getElementById('email').textContent = data.result.email;
-        document.getElementById('telefono').textContent = data.result.phoneNumber;
+        document.getElementById('nombre').value = data.result.name;
+        document.getElementById('apellido').value = data.result.lastName;
+        document.getElementById('email').value = data.result.email;
+        document.getElementById('telefono').value = data.result.phoneNumber;
         document.getElementById('rol').textContent = data.result.role.name === "ROLE_ADMIN" ? "Administrador" : "Usuario";
       } else {
-        console.error("Error en los datos de la respuesta:", data.text);
-        window.location.href = "login.html"; // Redirigir si hay un error con los datos
+        console.error("Error al obtener los datos del usuario:", data.text);
+        window.location.href = "../index.html";
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      // Manejar el error (mostrar mensaje o redirigir a login)
-      window.location.href = 'login.html'; // Redirigir a login si ocurre un error
+      window.location.href = '../index.html';
     });
-}
 
-// Agregar event listeners para los botones de modificar perfil y cambiar contraseña
-document.getElementById('modify-profile').addEventListener('click', () => {
-  // Redirigir a la página de modificar perfil (deberías tener esa página)
-  window.location.href = "modifyProfile.html"; // Ajusta el nombre de la página de modificación
-});
+  // Modificar perfil
+  document.getElementById('modify-profile').addEventListener('click', () => {
+    const nameField = document.getElementById('nombre');
+    const lastNameField = document.getElementById('apellido');
+    const emailField = document.getElementById('email');
+    const phoneField = document.getElementById('telefono');
 
-document.getElementById('change-password').addEventListener('click', () => {
-  // Redirigir a la página de cambiar contraseña (deberías tener esa página)
-  window.location.href = "changePassword.html"; // Ajusta el nombre de la página de cambiar contraseña
-});
+    const modifyButton = document.getElementById('modify-profile');
+    if (nameField.readOnly) {
+      // Habilitar campos para edición
+      nameField.removeAttribute('readonly');
+      lastNameField.removeAttribute('readonly');
+      emailField.removeAttribute('readonly');
+      phoneField.removeAttribute('readonly');
+      modifyButton.textContent = "Guardar cambios";
 
-document.getElementById('logout').addEventListener('click', () => {
-  // Eliminar el JWT y el userId del localStorage para cerrar sesión
-  localStorage.removeItem('jwt');
-  localStorage.removeItem('userId');
-  window.location.href = 'login.html'; // Redirigir al login
+      // Crear el botón de "Cancelar" con estilo mejorado
+      const cancelButton = document.createElement('button');
+      cancelButton.classList.add('btn', 'btn-outline-danger', 'ms-3', 'rounded', 'px-3', 'py-2'); // ms-3 para mayor margen
+      cancelButton.textContent = "Cancelar";
+
+      cancelButton.style.transition = 'background-color 0.3s, color 0.3s';
+      cancelButton.addEventListener('mouseover', () => {
+        cancelButton.style.backgroundColor = '#dc3545';
+        cancelButton.style.color = '#fff';
+      });
+      cancelButton.addEventListener('mouseout', () => {
+        cancelButton.style.backgroundColor = 'transparent';
+        cancelButton.style.color = '#dc3545';
+      });
+
+      // Evento para cancelar la edición
+      cancelButton.addEventListener('click', () => {
+        // Cancelar edición y volver al estado original
+        nameField.setAttribute('readonly', true);
+        lastNameField.setAttribute('readonly', true);
+        emailField.setAttribute('readonly', true);
+        phoneField.setAttribute('readonly', true);
+        modifyButton.textContent = "Modificar Perfil";
+        cancelButton.remove();
+      });
+
+      modifyButton.parentElement.appendChild(cancelButton);
+
+      // Guardar cambios
+      modifyButton.addEventListener('click', () => {
+        const updatedData = {
+          id: `${userId}`,
+          name: nameField.value,
+          lastName: lastNameField.value,
+          email: emailField.value,
+          phoneNumber: phoneField.value,
+          role: {
+            id: document.getElementById('rol').textContent === "Administrador" ? 1 : 2
+          }
+        };
+
+        fetch("http://localhost:8080/user/update", {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.type === 'SUCCESS') {
+              // Mostrar mensaje de éxito
+              showMessage('success', "Perfil actualizado correctamente");
+
+              // Deshabilitar los campos de texto y ocultar el botón de "Cancelar"
+              nameField.setAttribute('readonly', true);
+              lastNameField.setAttribute('readonly', true);
+              emailField.setAttribute('readonly', true);
+              phoneField.setAttribute('readonly', true);
+              modifyButton.textContent = "Modificar Perfil";
+              cancelButton.remove();
+            } else if (data.type === 'WARNING') {
+              // Mostrar mensaje de advertencia
+              showMessage('warning', data.text);
+            } else {
+              // Mostrar mensaje de error
+              showMessage('danger', "Error al actualizar el perfil");
+            }
+          })
+          .catch(error => {
+            // En caso de un error en la petición
+            console.error('Error al guardar los cambios:', error);
+            showMessage('danger', "Hubo un problema al guardar los cambios.");
+          });
+      });
+
+    }
+  });
+
+  document.getElementById('change-password').addEventListener('click', () => {
+    const email = document.getElementById('email').value;
+    window.location.href = `../views/changePass.html?email=${encodeURIComponent(email)}`;
+  });
+
+  document.getElementById('logout').addEventListener('click', () => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('userId');
+    window.location.href = '../index.html';
+  });
 });

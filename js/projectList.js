@@ -1,8 +1,18 @@
+function showMessage(type, message) {
+  messageElement.className = `alert alert-${type}`;
+  messageText.textContent = message;
+  messageElement.style.display = 'block';
+
+  setTimeout(() => {
+    messageElement.style.display = 'none';
+  }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   function loadProjects(statusFilter = "") {
     const projectsList = document.getElementById("projects-list");
-    projectsList.innerHTML = ""; // Limpiamos la lista antes de cargar
+    projectsList.innerHTML = "";
 
     fetch(`http://localhost:8080/projects/all`)
       .then((response) => response.json())
@@ -36,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
           projectsList.appendChild(tr);
         });
+      })
+      .catch((error) => {
+        console.error("Error al cargar los proyectos:", error);
+        showMessage('danger', "Hubo un problema al cargar los proyectos.");
       });
   }
 
@@ -53,13 +67,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(data => {
         if (data.type === "SUCCESS") {
           loadProjects();
+          showMessage('success', "Estado actualizado correctamente.");
         } else {
-          alert(data.text);
+          showMessage('warning', data.text);
         }
       })
       .catch(error => {
         console.error("Error al cambiar el estado:", error);
-        alert("Hubo un problema al cambiar el estado del proyecto.");
+        showMessage('danger', "Hubo un problema al cambiar el estado del proyecto.");
       });
   };
 
@@ -213,26 +228,24 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then(response => response.json())
         .then(data => {
-          if (data.type === 'SUCCESS') { // Asegúrate de que la respuesta tenga esta propiedad
-            // Actualizar la interfaz después de guardar
+          if (data.type === 'SUCCESS') {
             nameCell.textContent = updatedName;
             abbreviationCell.textContent = updatedAbbreviation;
             descriptionCell.textContent = updatedDescription;
-            customerCell.textContent = updatedCustomer; // Usar el nombre o ID, según sea necesario
-            categoryCell.textContent = updatedCategory; // Usar el nombre o ID, según sea necesario
+            customerCell.textContent = updatedCustomer;
+            categoryCell.textContent = updatedCategory;
 
-            // Recargar la página para aplicar los cambios
-            window.location.reload(); // Esto recargará toda la página
+            window.location.reload();
+            showMessage('success', 'Proyecto actualizado correctamente.');
           } else {
-            alert('Error al guardar los cambios');
+            showMessage('warning', 'Error al guardar los cambios');
           }
         })
         .catch(error => {
           console.error("Error al guardar:", error);
-          alert("Hubo un problema al guardar los cambios.");
+          showMessage('danger', "Hubo un problema al guardar los cambios.");
         });
     });
   };
-
 
 });

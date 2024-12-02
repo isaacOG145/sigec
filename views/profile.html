@@ -3,39 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil de Usuario</title>
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/form.css">
-
-  <title>Perfil de Usuario</title>
 </head>
 <body>
+
 <div id="header-placeholder"></div>
 
-
 <div class="container-fluid">
-
   <main class="main-content">
-    <form class="mt-5" action="/submit" method="post">
+    <form class="mt-5" id="profile">
       <h2>Perfil</h2>
 
       <div class="form-group">
         <label for="nombre"><strong>Nombre:</strong></label>
-        <span id="nombre" class="form-control-plaintext"></span>
+        <input type="text" id="nombre" class="form-control" readonly>
       </div>
 
       <div class="form-group">
         <label for="apellido"><strong>Apellidos:</strong></label>
-        <span id="apellido" class="form-control-plaintext"></span>
+        <input type="text" id="apellido" class="form-control" readonly>
       </div>
 
       <div class="form-group">
         <label for="email"><strong>Correo electrónico:</strong></label>
-        <span id="email" class="form-control-plaintext"></span>
+        <input type="email" id="email" class="form-control" readonly>
       </div>
 
       <div class="form-group">
         <label for="telefono"><strong>Teléfono:</strong></label>
-        <span id="telefono" class="form-control-plaintext"></span>
+        <input type="text" id="telefono" class="form-control" readonly>
       </div>
 
       <div class="form-group">
@@ -45,25 +43,27 @@
 
       <div class="container">
         <div class="row">
-          <div class="col-6 mb-3">
+          <div class="col-12 mb-3">
             <button type="button" class="mod" id="change-password">Cambiar contraseña</button>
           </div>
-          <div class="col-6 mb-3">
+          <div class="col-12 mb-3">
             <button type="button" class="mod" id="modify-profile">Modificar Perfil</button>
           </div>
-        </div>
-        <div class="row">
           <div class="col-12 mb-3">
             <button type="button" class="mod" id="logout">Cerrar sesión</button>
           </div>
         </div>
       </div>
 
+      <div id="message" class="alert alert-dismissible" role="alert" style="display:none;">
+        <span id="message-text"></span>
+      </div>
     </form>
   </main>
 </div>
 
 <script src="../js/loadHeader.js"></script>
 <script src="../js/profile.js"></script>
+
 </body>
 </html>

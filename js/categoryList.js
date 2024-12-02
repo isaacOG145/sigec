@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error al cargar las categorías:", error);
+        showMessage('danger', "Hubo un problema al cargar las categorías.");
       });
   }
 
@@ -56,13 +57,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(data => {
         if (data.type === "SUCCESS") {
           loadCategories();
+          showMessage('success', "Estado actualizado correctamente.");
         } else {
-          alert(data.text);
+          showMessage('warning', data.text);
         }
       })
       .catch(error => {
         console.error("Error al cambiar el estado:", error);
-        alert("Hubo un problema al cambiar el estado del proyecto.");
+        showMessage('danger', "Hubo un problema al cambiar el estado del proyecto.");
       });
   };
 
@@ -112,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const updatedName = nameCell.querySelector('input').value;
       const updatedDescription = descriptionCell.querySelector('input').value;
 
-
       const updatedCategory = {
         id: categoryId,
         name: updatedName,
@@ -131,18 +132,19 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
           if (data.type === 'SUCCESS') {
-
             nameCell.textContent = updatedName;
             descriptionCell.textContent = updatedDescription;
 
+            // Mostrar mensaje de éxito
+            showMessage('success', "Categoría actualizada correctamente.");
             window.location.reload();
           } else {
-            alert('Error al guardar los cambios');
+            showMessage('warning', 'Error al guardar los cambios');
           }
         })
         .catch(error => {
           console.error("Error al guardar:", error);
-          alert("Hubo un problema al guardar los cambios.");
+          showMessage('danger', "Hubo un problema al guardar los cambios.");
         });
     });
   };

@@ -28,7 +28,6 @@ function showMessage(type, message, email) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
   const urlParams = new URLSearchParams(window.location.search);
   const email = urlParams.get('email');
 
