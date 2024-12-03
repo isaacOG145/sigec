@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tareas</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/list.css">
+
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main class="container-fluid ">
+  <h2>Lista de Usuarios</h2>
+
+  <div class="d-flex justify-content-around w-100">
+
+    <div id="buscar-container" class="mt-5">
+      <label for="Categoria" class="label-buscar">Buscar por:</label>
+      <select id="Categoria" name="Categoria" required class="form-select">
+        <option value="">Todos</option>
+        <option value="Activos">Activos</option>
+        <option value="Inactivos">Inactivos</option>
+      </select>
+    </div>
+
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Correo electrónico</th>
+      <th>Teléfono</th>
+      <th>Rol</th>
+      <th>Status</th>
+      <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody id="user-list">
+    <tr>
+
+    </tr>
+    </tbody>
+  </table>
+</main>
+
+<!-- Script -->
+<script src="../js/loadHeader.js"></script>
+<script src="../js/userList.js"></script>
+</body>
+</html>

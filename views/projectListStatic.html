@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Proyectos</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/list.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main class="container-fluid">
+  <h2>Lista de Proyectos</h2>
+
+  <div class="d-flex justify-content-around w-100">
+    <div id="buscar-container" class="mt-5">
+      <label for="Categoria" class="label-buscar">Buscar por:</label>
+      <select id="Categoria" name="Categoria" required class="form-select">
+        <option value="">Todos</option>
+        <option value="Activos">Activos</option>
+        <option value="Inactivos">Inactivos</option>
+      </select>
+    </div>
+
+
+    <div class="mt-5">
+      <a href="./projectRegister.html" class="nav-link btn-agregar">
+        <span>Agregar un nuevo proyecto</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div id="message" class="alert alert-dismissible mt-5" role="alert" style="display:none;">
+    <span id="message-text"></span>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Abreviatura</th>
+      <th>Descripción</th>
+      <th>Cliente</th>
+      <th>Categoría</th>
+      <th>Estado</th>
+
+    </tr>
+    </thead>
+    <tbody id="projects-list">
+
+    </tbody>
+  </table>
+</main>
+
+
+<script src="../js/loadHeader.js"></script>
+
+</body>
+</html>
