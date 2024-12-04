@@ -3,16 +3,16 @@
 describe('Prueba de registro de usuario', () => {
   it('Debe registrar un usuario correctamente', () => {
     // Visita la página de registro de usuarios
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister');  // Cambia la URL según tu entorno local
+    cy.visit('http://localhost:8081/views/userRegister.html');  // Cambia la URL según tu entorno local
 
     // Rellenar el formulario con los datos del usuario
-    cy.get('#U.nombre').type('Juan');
-    cy.get('#U.apellidos').type('Pérez');
-    cy.get('#U.email').type('juan.perez@example.com');
-    cy.get('#U.telefono').type('123456789');
-    cy.get('#U.password').type('contraseña123');
-    cy.get('#U.Cpassword').type('contraseña123');
-    cy.get('#U.rol').select('Usuario');
+    cy.get('#name').type('Juan');
+    cy.get('#lastName').type('Pérez');
+    cy.get('#email').type('juan.perez@example.com');
+    cy.get('#phone').type('123456789');
+    cy.get('#password').type('contraseña123');
+    cy.get('#passwordCon').type('contraseña123');
+    cy.get('#rol').select('Usuario');
 
     // Enviar el formulario
     cy.get('#userForm').submit();
@@ -22,27 +22,27 @@ describe('Prueba de registro de usuario', () => {
     cy.get('#message-text').should('contain', 'Usuario registrado correctamente');  // Verifica el mensaje de éxito
 
     // Verificar que los campos se han limpiado después del registro
-    cy.get('#U.nombre').should('have.value', '');  // El campo nombre debe estar vacío
-    cy.get('#U.apellidos').should('have.value', '');  // El campo apellidos debe estar vacío
-    cy.get('#U.email').should('have.value', '');  // El campo email debe estar vacío
-    cy.get('#U.telefono').should('have.value', '');  // El campo teléfono debe estar vacío
-    cy.get('#U.password').should('have.value', '');  // El campo contraseña debe estar vacío
-    cy.get('#U.Cpassword').should('have.value', '');  // El campo confirmar contraseña debe estar vacío
-    cy.get('#U.rol').should('have.value', '');  // El campo rol debe estar vacío
+    cy.get('#name').should('have.value', '');  // El campo nombre debe estar vacío
+    cy.get('#lastName').should('have.value', '');  // El campo apellidos debe estar vacío
+    cy.get('#email').should('have.value', '');  // El campo email debe estar vacío
+    cy.get('#phone').should('have.value', '');  // El campo teléfono debe estar vacío
+    cy.get('#password').should('have.value', '');  // El campo contraseña debe estar vacío
+    cy.get('#passwordCon').should('have.value', '');  // El campo confirmar contraseña debe estar vacío
+    cy.get('#rol').should('have.value', '');  // El campo rol debe estar vacío
   });
 
   it('Debe mostrar un error si las contraseñas no coinciden', () => {
     // Visita la página de registro de usuarios
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister');  // Cambia la URL según tu entorno local
+    cy.visit('http://localhost:8081/views/userRegister.html');  // Cambia la URL según tu entorno local
 
     // Rellenar el formulario con contraseñas que no coinciden
-    cy.get('#U.nombre').type('Ana');
-    cy.get('#U.apellidos').type('Gómez');
-    cy.get('#U.email').type('ana.gomez@example.com');
-    cy.get('#U.telefono').type('987654321');
-    cy.get('#U.password').type('contraseña123');
-    cy.get('#U.Cpassword').type('contraseña456');
-    cy.get('#U.rol').select('Administrador');
+    cy.get('#name').type('Ana');
+    cy.get('#lastName').type('Gómez');
+    cy.get('#email').type('ana.gomez@example.com');
+    cy.get('#phome').type('987654321');
+    cy.get('#password').type('contraseña123');
+    cy.get('#passwordCon').type('contraseña456');
+    cy.get('#rol').select('Administrador');
 
     // Enviar el formulario
     cy.get('#userForm').submit();
@@ -53,17 +53,16 @@ describe('Prueba de registro de usuario', () => {
   });
 
   it('Debe mostrar un error si falta completar algún campo', () => {
-    // Visita la página de registro de usuarios
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister');  // Cambia la URL según tu entorno local
 
-    // Rellenar el formulario con datos faltantes
-    cy.get('#U.nombre').type('Carlos');
-    cy.get('#U.apellidos').type('');
-    cy.get('#U.email').type('');
-    cy.get('#U.telefono').type('');
-    cy.get('#U.password').type('');
-    cy.get('#U.Cpassword').type('');
-    cy.get('#U.rol').select('');
+    cy.visit('http://localhost:8081/views/userRegister.html');  // Cambia la URL según tu entorno local
+
+    cy.get('#name').type('Carlos');
+    cy.get('#lastName').type('');
+    cy.get('#email').type('');
+    cy.get('#phone').type('');
+    cy.get('#password').type('');
+    cy.get('#passwordCon').type('');
+    cy.get('#rol').select('');
 
     // Enviar el formulario
     cy.get('#userForm').submit();

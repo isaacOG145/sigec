@@ -1,11 +1,12 @@
 describe('Prueba de login exitoso', () => {
   it('passes', () => {
-    cy.visit('http://127.0.0.1:8081/sigec/')
+
+    cy.visit('http://localhost:8081/')
 
      cy.get('#email').type('admin@domain.com')
 
      cy.get('#password').type('adminPassword')
- 
+
      cy.get('button[type="submit"]').click()
 
      //cy.url().should('include', 'views/projectList.html')
@@ -15,10 +16,10 @@ describe('Prueba de login exitoso', () => {
 
 describe('Prueba de login con usuario inactivo', () => {
   it('Debería recibir un error 403 cuando las credenciales son incorrectas', () => {
-    
-    cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest') 
 
-    cy.visit('http://127.0.0.1:8081/sigec/')
+    cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
+
+    cy.visit('http://localhost:8081/')
 
     cy.get('#email').type('admin@domain.com')
 
@@ -29,17 +30,17 @@ describe('Prueba de login con usuario inactivo', () => {
     cy.wait('@loginRequest').its('response.statusCode').should('eq', 403)
 
     cy.get('#message').should('be.visible')
-    cy.get('#message-text').should('contain', 'Usuario o contraseña incorrectos') 
+    cy.get('#message-text').should('contain', 'Usuario o contraseña incorrectos')
   })
 })
 
 
 describe('Prueba de login con contraseña incorrecta', () => {
   it('Debería recibir un error 403 cuando las credenciales son incorrectas', () => {
-    
-    cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest') 
 
-    cy.visit('http://127.0.0.1:8081/sigec/')
+    cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
+
+    cy.visit('http://localhost:8081/')
 
     cy.get('#email').type('admin@domain.com')
 
@@ -50,6 +51,6 @@ describe('Prueba de login con contraseña incorrecta', () => {
     cy.wait('@loginRequest').its('response.statusCode').should('eq', 403)
 
     cy.get('#message').should('be.visible')
-    cy.get('#message-text').should('contain', 'Usuario o contraseña incorrectos') 
+    cy.get('#message-text').should('contain', 'Usuario o contraseña incorrectos')
   })
 })
