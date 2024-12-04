@@ -1,24 +1,40 @@
+function showMessage(type, message) {
+  const messageElement = document.getElementById("message");
+  const messageText = document.getElementById("message-text");
+
+  messageElement.className = `alert alert-${type}`;
+  messageText.textContent = message;
+
+  messageElement.style.display = 'block';
+
+  setTimeout(() => {
+    messageElement.style.display = 'none';
+  }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  let currentStatusFilter = "";
 
   function loadCategories(statusFilter = "") {
+    currentStatusFilter = statusFilter;
     const categoryList = document.getElementById("category-list");
     categoryList.innerHTML = "";
 
-    // Hacer fetch de la API
     fetch(`http://localhost:8080/projectCat/all`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al obtener categorías');
+        }
+        return response.json();
+      })
       .then((data) => {
-        console.log(data);
-
         const categories = data.result;
-
         const filteredCategories = statusFilter
           ? categories.filter((category) => category.status === (statusFilter === "Activos"))
           : categories;
 
         filteredCategories.forEach((category) => {
           const tr = document.createElement("tr");
-
           tr.innerHTML = `
             <td class="editable">${category.name}</td>
             <td class="editable">${category.description}</td>
@@ -33,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
               </button>
             </td>
           `;
-
           categoryList.appendChild(tr);
         });
       })
@@ -53,16 +68,17 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify(projectCatDto),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.type === "SUCCESS") {
-          loadCategories();
+          // Recargamos con el filtro actual
+          loadCategories(currentStatusFilter);
           showMessage('success', "Estado actualizado correctamente.");
         } else {
           showMessage('warning', data.text);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error al cambiar el estado:", error);
         showMessage('danger', "Hubo un problema al cambiar el estado del proyecto.");
       });
@@ -81,17 +97,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const nameCell = cells[0];
     const descriptionCell = cells[1];
 
-    if (nameCell.querySelector('input') || nameCell.querySelector('select')) {
+    if (nameCell.querySelector('input')) {
       return;
     }
 
-    // Guardar los valores originales
     const originalData = {
       name: nameCell.textContent,
       description: descriptionCell.textContent,
     };
 
-    // Convertir celdas a campos de entrada
     nameCell.innerHTML = `<input type="text" class="form-control" value="${originalData.name}" />`;
     descriptionCell.innerHTML = `<input type="text" class="form-control" value="${originalData.description}" />`;
 
@@ -101,14 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
     cancelButton.classList.add('btn', 'btn-secondary', 'ms-2');
     cancelButton.textContent = "Cancelar";
     cancelButton.addEventListener('click', function () {
-
       nameCell.textContent = originalData.name;
       descriptionCell.textContent = originalData.description;
-
       button.textContent = "Editar";
       cancelButton.remove();
     });
-    row.querySelector('.btn-edit').parentNode.appendChild(cancelButton);
+    row.querySelector('td:last-child').appendChild(cancelButton);
 
     button.addEventListener('click', function () {
       const updatedName = nameCell.querySelector('input').value;
@@ -117,11 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const updatedCategory = {
         id: categoryId,
         name: updatedName,
-        description: updatedDescription,
-        status: true
+        description: updatedDescription
       };
 
-      // Realizar el PUT para guardar los cambios en la nueva ruta
       fetch(`http://localhost:8080/projectCat/update`, {
         method: 'PUT',
         headers: {
@@ -129,24 +139,24 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         body: JSON.stringify(updatedCategory),
       })
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           if (data.type === 'SUCCESS') {
-            nameCell.textContent = updatedName;
-            descriptionCell.textContent = updatedDescription;
-
-            // Mostrar mensaje de éxito
+            loadCategories()
             showMessage('success', "Categoría actualizada correctamente.");
-            window.location.reload();
           } else {
             showMessage('warning', 'Error al guardar los cambios');
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error al guardar:", error);
           showMessage('danger', "Hubo un problema al guardar los cambios.");
         });
     });
   };
+  document.getElementById("Categoria").addEventListener("change", function (event) {
+    const statusFilter = event.target.value;
+    loadCategories(statusFilter);
+  });
 
 });

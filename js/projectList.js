@@ -1,6 +1,10 @@
 function showMessage(type, message) {
+  const messageElement = document.getElementById("message");
+  const messageText = document.getElementById("message-text");
+
   messageElement.className = `alert alert-${type}`;
   messageText.textContent = message;
+
   messageElement.style.display = 'block';
 
   setTimeout(() => {
@@ -127,12 +131,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const customerCell = cells[3];
     const categoryCell = cells[4];
 
-    // Verificar si ya estamos en edición
-    if (nameCell.querySelector('input') || nameCell.querySelector('select')) {
-      return; // Ya estamos editando esta fila
+    if (nameCell.querySelector('input')) {
+      return;
     }
 
-    // Guardar los valores originales
     const originalData = {
       name: nameCell.textContent,
       abbreviation: abbreviationCell.textContent,
@@ -141,13 +143,12 @@ document.addEventListener("DOMContentLoaded", function () {
       category: categoryCell.textContent,
     };
 
-    // Convertir celdas a campos de entrada
     nameCell.innerHTML = `<input type="text" class="form-control" value="${originalData.name}" />`;
     abbreviationCell.innerHTML = `<input type="text" class="form-control" value="${originalData.abbreviation}" />`;
     descriptionCell.innerHTML = `<input type="text" class="form-control" value="${originalData.description}" />`;
 
     loadCategoriesAndClients().then(data => {
-      // Crear select para categorías
+
       const categorySelect = document.createElement('select');
       categorySelect.classList.add('form-select');
       let categoryId = null;
@@ -157,13 +158,12 @@ document.addEventListener("DOMContentLoaded", function () {
         option.textContent = category.name;
         categorySelect.appendChild(option);
         if (category.name === originalData.category) {
-          categoryId = category.id; // Asignamos el id de la categoría correspondiente
+          categoryId = category.id;
         }
       });
-      categorySelect.value = categoryId;  // Establecer el valor correcto al `select`
+      categorySelect.value = categoryId;
       categoryCell.innerHTML = categorySelect.outerHTML;
 
-      // Crear select para clientes
       const customerSelect = document.createElement('select');
       customerSelect.classList.add('form-select');
       let customerId = null;
@@ -173,10 +173,10 @@ document.addEventListener("DOMContentLoaded", function () {
         option.textContent = customer.name;
         customerSelect.appendChild(option);
         if (customer.name === originalData.customer) {
-          customerId = customer.id; // Asignamos el id del cliente correspondiente
+          customerId = customer.id;
         }
       });
-      customerSelect.value = customerId;  // Establecer el valor correcto al `select`
+      customerSelect.value = customerId;
       customerCell.innerHTML = customerSelect.outerHTML;
     });
 
@@ -213,12 +213,11 @@ document.addEventListener("DOMContentLoaded", function () {
         name: updatedName,
         abbreviation: updatedAbbreviation,
         description: updatedDescription,
-        customerId: parseInt(updatedCustomer), // Usar customerId según el backend
-        projectCategoryId: parseInt(updatedCategory), // Usar projectCategoryId según el backend
-        status: true // Suponiendo que el proyecto está activo
+        customerId: parseInt(updatedCustomer),
+        projectCategoryId: parseInt(updatedCategory),
+        status: true
       };
 
-      // Realizar el PUT para guardar los cambios en la nueva ruta
       fetch(`http://localhost:8080/projects/update`, {
         method: 'PUT',
         headers: {
@@ -229,13 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
           if (data.type === 'SUCCESS') {
-            nameCell.textContent = updatedName;
-            abbreviationCell.textContent = updatedAbbreviation;
-            descriptionCell.textContent = updatedDescription;
-            customerCell.textContent = updatedCustomer;
-            categoryCell.textContent = updatedCategory;
-
-            window.location.reload();
+            loadProjects()
             showMessage('success', 'Proyecto actualizado correctamente.');
           } else {
             showMessage('warning', 'Error al guardar los cambios');
@@ -247,5 +240,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   };
+
+  document.getElementById("Categoria").addEventListener("change", function (event) {
+    const statusFilter = event.target.value;
+    loadProjects(statusFilter);
+  });
 
 });
