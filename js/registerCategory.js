@@ -18,8 +18,8 @@ function showMessage(type, message) {
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const nombre = document.getElementById('PC.nombre').value;
-  const descripcion = document.getElementById('PC.descripcion').value;
+  const nombre = document.getElementById('name').value;
+  const descripcion = document.getElementById('description').value;
 
   if (!nombre || !descripcion) {
     showMessage('warning', 'Debes llenar todos los campos obligatorios.');
@@ -46,8 +46,8 @@ form.addEventListener('submit', async (event) => {
     if (response.ok && result.type === 'SUCCESS') {
 
       showMessage(result.type.toLowerCase(), result.text);
-      document.getElementById('PC.nombre').value = '';
-      document.getElementById('PC.descripcion').value = '';
+      document.getElementById('name').value = '';
+      document.getElementById('description').value = '';
 
     } else {
 

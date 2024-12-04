@@ -63,6 +63,7 @@ loginForm.addEventListener('submit', async (event) => {
     localStorage.setItem('jwt', data.jwt);
     localStorage.setItem('userId', data.userId);
     localStorage.setItem('email',email);
+    localStorage.setItem('rol', role);
     localStorage.setItem('expiration', Date.now() + data.expiration);
 
     window.location.href = 'views/projectList.html';

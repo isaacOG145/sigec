@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Cargar las categorías activas
+
   fetch('http://localhost:8080/projectCat/active')
     .then(response => response.json())
     .then(data => {
-      const categoriaSelect = document.getElementById('P.categoria');
+      const categoriaSelect = document.getElementById('category');
 
       if (data.type === 'SUCCESS' && Array.isArray(data.result) && data.result.length > 0) {
         data.result.forEach(category => {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch('http://localhost:8080/customers/active')
     .then(response => response.json())
     .then(data => {
-      const clienteSelect = document.getElementById('P.cliente');
+      const clienteSelect = document.getElementById('customer');
 
       if (data.type === 'SUCCESS' && Array.isArray(data.result) && data.result.length > 0) {
         data.result.forEach(customer => {
@@ -101,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.type === 'SUCCESS') {
           showMessage('success', 'Proyecto guardado exitosamente');
 
-          // Limpiar el formulario solo si es exitoso
           form.reset();
         } else {
           showMessage('danger', data.text || 'Error al guardar el proyecto');

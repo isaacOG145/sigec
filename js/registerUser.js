@@ -17,13 +17,13 @@ function showMessage(type, message) {
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const name = document.getElementById('U.nombre').value;
-  const lastName = document.getElementById('U.apellidos').value;
-  const email = document.getElementById('U.email').value;
-  const phoneNumber = document.getElementById('U.telefono').value;
-  const password = document.getElementById('U.password').value;
-  const confirmPassword = document.getElementById('U.Cpassword').value;
-  const roleSelect = document.getElementById('U.rol');
+  const name = document.getElementById('name').value;
+  const lastName = document.getElementById('lastName').value;
+  const email = document.getElementById('email').value;
+  const phoneNumber = document.getElementById('phone').value;
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('passwordCon').value;
+  const roleSelect = document.getElementById('rol');
   const selectedRole = roleSelect.value;
 
   if (!name || !lastName || !email || !phoneNumber || !password || !confirmPassword || !selectedRole) {
@@ -67,13 +67,13 @@ form.addEventListener('submit', async (event) => {
     if (response.ok && result.type === 'SUCCESS') {
 
       showMessage(result.type.toLowerCase(), result.text);
-      document.getElementById('U.nombre').value = '';
-      document.getElementById('U.apellidos').value = '';
-      document.getElementById('U.email').value = '';
-      document.getElementById('U.telefono').value = '';
-      document.getElementById('U.password').value = '';
-      document.getElementById('U.Cpassword').value = '';
-      document.getElementById('U.rol').value = "";
+      document.getElementById('name').value = '';
+      document.getElementById('lastName').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('passwordCon').value = '';
+      document.getElementById('rol').value = "";
 
     } else {
       showMessage('danger', result.text || 'Hubo un problema al registrar la categoría');
