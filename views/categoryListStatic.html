@@ -6,16 +6,16 @@
   <title>Lista de Tareas</title>
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/list.css">
-
 </head>
 <body>
 
 <div id="header-placeholder"></div>
 
 <main class="container-fluid ">
-  <h2>Lista de Usuarios</h2>
+  <h2>Lista de las Categorías de los Proyectos</h2>
 
   <div class="d-flex justify-content-around w-100">
+
 
     <div id="buscar-container" class="mt-5">
       <label for="Categoria" class="label-buscar">Buscar por:</label>
@@ -26,46 +26,29 @@
       </select>
     </div>
 
-    <div class=" mt-5">
-      <a href="userRegister.html" class="nav-link btn-agregar">
-        <span>Agregar un nuevo usuario</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-        </svg>
-      </a>
-    </div>
-
-  </div>
-
-  <div class="row">
-    <div id="message" class="alert alert-dismissible" role="alert" style="display:none;">
+    <div id="message" class="alert alert-dismissible mt-5" role="alert" style="display:none;">
       <span id="message-text"></span>
     </div>
-  </div>
 
+
+  </div>
 
   <table class="table">
     <thead>
     <tr>
       <th>Nombre</th>
-      <th>Apellidos</th>
-      <th>Correo electrónico</th>
-      <th>Teléfono</th>
-      <th>Rol</th>
+      <th>Descripción</th>
       <th>Status</th>
-      <th>Editar</th>
-    </tr>
-    </thead>
-    <tbody id="user-list">
-    <tr>
 
     </tr>
+    </thead>
+    <tbody id="category-list">
+
     </tbody>
   </table>
 </main>
 
-<!-- Script -->
 <script src="../js/loadHeader.js"></script>
-<script src="../js/userList.js"></script>
+<script src="../js/categoryListStatic.js"></script>
 </body>
 </html>

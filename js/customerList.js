@@ -1,21 +1,39 @@
+const jwt = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+// Función para mostrar mensajes
+function showMessage(type, message) {
+  const messageElement = document.getElementById("message");
+  const messageText = document.getElementById("message-text");
+
+  messageElement.className = `alert alert-${type}`;
+  messageText.textContent = message;
+
+  messageElement.style.display = 'block';
+
+  setTimeout(() => {
+    messageElement.style.display = 'none';
+  }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
+  // Función para cargar los clientes
   function loadCustomers(statusFilter = "") {
     const customerList = document.getElementById("customer-list");
-    customerList.innerHTML = "";
+    customerList.innerHTML = ""; // Limpiar la tabla antes de cargar los nuevos datos
 
-    // Hacer fetch de la API
+    // Hacer fetch de la API para obtener los datos
     fetch(`http://localhost:8080/customers/all`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-
         const customers = data.result;
 
+        // Filtrar clientes por estado si se proporciona un filtro
         const filteredCategories = statusFilter
           ? customers.filter((customer) => customer.status === (statusFilter === "Activos"))
           : customers;
 
+        // Crear filas de la tabla para cada cliente
         filteredCategories.forEach((customer) => {
           const tr = document.createElement("tr");
 
@@ -40,9 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error al cargar los clientes:", error);
+        showMessage("danger", "Hubo un problema al cargar los clientes.");
       });
   }
 
+  // Función para cambiar el estado del cliente
   window.toggleStatus = function (customerId) {
     const customerDto = { id: customerId };
 
@@ -56,18 +76,18 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(response => response.json())
       .then(data => {
         if (data.type === "SUCCESS") {
-          loadCustomers();
+          loadCustomers(); // Recargar los clientes después de cambiar el estado
+          showMessage("success", "Estado del cliente actualizado correctamente.");
         } else {
-          alert(data.text);
+          showMessage("danger", data.text);
         }
       })
       .catch(error => {
         console.error("Error al cambiar el estado:", error);
-        alert("Hubo un problema al cambiar el estado del cliente.");
+        showMessage("danger", "Hubo un problema al cambiar el estado del cliente.");
       });
   };
 
-  loadCustomers();
 
   document.getElementById("Categoria").addEventListener("change", function (event) {
     const statusFilter = event.target.value;
@@ -79,21 +99,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const cells = row.querySelectorAll('td');
     const nameCell = cells[0];
     const emailCell = cells[1];
-    const phoneCell = cells[2]; // Aquí también cambiamos a phoneNumber
+    const phoneCell = cells[2];
 
-    if (nameCell.querySelector('input') || nameCell.querySelector('select')) {
+    // Si ya estamos en modo de edición, no hacer nada
+    if (nameCell.querySelector('input')) {
       return;
     }
 
     const originalData = {
       name: nameCell.textContent,
       email: emailCell.textContent,
-      phone: phoneCell.textContent // Cambié aquí a phoneNumber
+      phone: phoneCell.textContent
     };
 
     nameCell.innerHTML = `<input type="text" class="form-control" value="${originalData.name}" />`;
     emailCell.innerHTML = `<input type="text" class="form-control" value="${originalData.email}" />`;
-    phoneCell.innerHTML = `<input type="text" class="form-control" value="${originalData.phone}" />`; // Cambié aquí a phoneNumber
+    phoneCell.innerHTML = `<input type="text" class="form-control" value="${originalData.phone}" />`;
 
     button.textContent = "Guardar";
 
@@ -101,7 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
     cancelButton.classList.add('btn', 'btn-secondary', 'ms-2');
     cancelButton.textContent = "Cancelar";
     cancelButton.addEventListener('click', function () {
-
       nameCell.textContent = originalData.name;
       emailCell.textContent = originalData.email;
       phoneCell.textContent = originalData.phone;
@@ -109,22 +129,20 @@ document.addEventListener("DOMContentLoaded", function () {
       button.textContent = "Editar";
       cancelButton.remove();
     });
-    row.querySelector('.btn-edit').parentNode.appendChild(cancelButton);
+    row.querySelector('td:last-child').appendChild(cancelButton);
 
     button.addEventListener('click', function () {
       const updatedName = nameCell.querySelector('input').value;
       const updatedEmail = emailCell.querySelector('input').value;
       const updatedPhone = phoneCell.querySelector('input').value;
 
-
       const updatedCustomer = {
         id: customerId,
         name: updatedName,
         email: updatedEmail,
-        phoneNumber: updatedPhone // Cambié aquí a phoneNumber
+        phone: updatedPhone
       };
 
-      // Realizar el PUT para guardar los cambios en la nueva ruta
       fetch(`http://localhost:8080/customers/update`, {
         method: 'PUT',
         headers: {
@@ -135,21 +153,19 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
           if (data.type === 'SUCCESS') {
-
-            nameCell.textContent = updatedName;
-            emailCell.textContent = updatedEmail;
-            phoneCell.textContent = updatedPhone;
-
-            window.location.reload();
+            loadCustomers();
+            showMessage("success", "Usuario editado correctamente.");
           } else {
-            alert('Error al guardar los cambios');
+            showMessage("danger", data.text);
           }
         })
         .catch(error => {
           console.error("Error al guardar:", error);
-          alert("Hubo un problema al guardar los cambios.");
+          showMessage("danger", "Hubo un problema al guardar los cambios.");
         });
     });
   };
+
+  loadCustomers();
 
 });

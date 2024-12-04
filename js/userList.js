@@ -1,3 +1,17 @@
+function showMessage(type, message) {
+  const messageElement = document.getElementById("message");
+  const messageText = document.getElementById("message-text");
+
+  messageElement.className = `alert alert-${type}`;
+  messageText.textContent = message;
+
+  messageElement.style.display = 'block';
+
+  setTimeout(() => {
+    messageElement.style.display = 'none';
+  }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   function loadUsers(statusFilter = "") {
@@ -8,10 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`http://localhost:8080/user/all`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-
         const users = data.result;
-
         const filteredUsers = statusFilter
           ? users.filter((user) => user.status === (statusFilter === "Activos"))
           : users;
@@ -41,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       })
       .catch((error) => {
-        console.error("Error al cargar los usuarios:", error);
+        showMessage("danger", "Error al cargar los usuarios.");
       });
   }
 
@@ -59,13 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(data => {
         if (data.type === "SUCCESS") {
           loadUsers();
+          showMessage("success", "Estado del usuario cambiado exitosamente.");
         } else {
-          alert(data.text);
+          showMessage("danger", data.text);
         }
       })
       .catch(error => {
         console.error("Error al cambiar el estado:", error);
-        alert("Hubo un problema al cambiar el estado del usuario.");
+        showMessage("danger", "Hubo un problema al cambiar el estado del usuario.");
       });
   };
 
@@ -140,13 +152,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
           if (data.type === 'SUCCESS') {
             loadUsers();
+            showMessage("success", "Usuario editado correctamente.");
           } else {
-            alert('Error al guardar los cambios');
+            showMessage("danger", data.text);
           }
         })
         .catch(error => {
           console.error("Error al guardar:", error);
-          alert("Hubo un problema al guardar los cambios.");
+          showMessage("danger", "Hubo un problema al guardar los cambios.");
         });
     });
   };
