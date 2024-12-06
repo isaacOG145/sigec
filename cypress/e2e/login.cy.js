@@ -1,7 +1,7 @@
 describe('Prueba de login exitoso', () => {
   it('passes', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec')
+    cy.visit('http://127.0.0.1:8081')
 
     cy.get('#email').type('admin@domain.com')
 
@@ -19,7 +19,7 @@ describe('Prueba de login con usuario inactivo', () => {
 
     cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
 
-    cy.visit('http://127.0.0.1:8081/sigec')
+    cy.visit('http://127.0.0.1:8081')
 
     cy.get('#email').type('admin@domain.com')
 
@@ -40,7 +40,7 @@ describe('Prueba de login con contraseña incorrecta', () => {
 
     cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
 
-    cy.visit('http://127.0.0.1:8081/sigec')
+    cy.visit('http://127.0.0.1:8081')
 
     cy.get('#email').type('admin@domain.com')
 

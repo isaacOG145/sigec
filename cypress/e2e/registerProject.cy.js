@@ -11,7 +11,7 @@ describe('Formulario de Registro de Proyecto', () => {
       expect(response.body.result.length).to.be.greaterThan(0);
     });
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/projectRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/projectRegister.html');
   });
 
   it('debe registrar un proyecto correctamente con datos válidos', () => {

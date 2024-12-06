@@ -4,7 +4,7 @@ describe('Prueba de filtro de categorías de proyectos', () => {
   beforeEach(() => {
 
     cy.intercept('GET', 'http://localhost:8080/projectCat/all').as('getCategories');
-    cy.visit('http://127.0.0.1:8081/sigec/views/categoryList.html');
+    cy.visit('http://127.0.0.1:8081/views/categoryList.html');
 
     cy.wait('@getCategories').then((interception) => {
       allCategories = interception.response.body.result;

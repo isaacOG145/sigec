@@ -4,7 +4,7 @@ describe('Prueba de filtro de clientes', () => {
   beforeEach(() => {
 
     cy.intercept('GET', 'http://localhost:8080/customers/all').as('getClients');
-    cy.visit('http://127.0.0.1:8081/sigec/views/customerList.html'); // Asegúrate de que la URL sea correcta
+    cy.visit('http://127.0.0.1:8081/views/customerList.html'); // Asegúrate de que la URL sea correcta
 
     cy.wait('@getClients').then((interception) => {
       allClients = interception.response.body.result;

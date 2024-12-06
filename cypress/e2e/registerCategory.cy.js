@@ -25,7 +25,7 @@ describe('Formulario de Registro de Categoría', () => {
 
   it('debe mostrar un mensaje de error en el nombre', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/categoryRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/categoryRegister.html');
     cy.get('#name').type('&&&&&&&&');
     cy.get('#description').type('Descripción de la nueva categoría');
     cy.get('#categoryForm').submit();
