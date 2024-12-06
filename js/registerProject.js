@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requiredFields.forEach(field => {
       if (!formObject[field]) {
-        isValid = false;
+        isValid = false;0
         missingFields.push(field);
       }
     });
