@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 5000);
   }
 
-  // Cargar datos del usuario
   fetch(`http://localhost:8080/user/findId/${userId}`, {
     method: 'GET',
     headers: {
@@ -56,14 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const modifyButton = document.getElementById('modify-profile');
     if (nameField.readOnly) {
-      // Habilitar campos para edición
+
       nameField.removeAttribute('readonly');
       lastNameField.removeAttribute('readonly');
       emailField.removeAttribute('readonly');
       phoneField.removeAttribute('readonly');
       modifyButton.textContent = "Guardar cambios";
 
-      // Crear el botón de "Cancelar" con estilo mejorado
       const cancelButton = document.createElement('button');
       cancelButton.classList.add('btn', 'btn-outline-danger', 'ms-3', 'rounded', 'px-3', 'py-2'); // ms-3 para mayor margen
       cancelButton.textContent = "Cancelar";
