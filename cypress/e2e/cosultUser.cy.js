@@ -1,0 +1,48 @@
+describe('Prueba de filtro de usuarios', () => {
+  let allUsers; // Para almacenar todos los usuarios
+
+  beforeEach(() => {
+    // Interceptamos la solicitud de los usuarios para poder verificar la respuesta
+    cy.intercept('GET', 'http://localhost:8080/user/all').as('getUsers');
+    cy.visit('http://127.0.0.1:8081/sigec/views/userList.html'); // Asegúrate de que la URL sea correcta
+
+    // Esperamos que se carguen los usuarios
+    cy.wait('@getUsers').then((interception) => {
+      allUsers = interception.response.body.result; // Guardamos todos los usuarios
+    });
+  });
+
+  it('debe mostrar solo los usuarios activos cuando se selecciona "Activos"', () => {
+    // Seleccionamos la opción "Activos" en el filtro
+    cy.get('#Categoria').select('Activos');
+
+    // Verificamos que la tabla se actualice y solo se muestren los usuarios activos
+    cy.get('#user-list tr').should('have.length.greaterThan', 0); // Aseguramos que haya filas en la tabla
+
+    // Verificar que todos los usuarios en la tabla son activos
+    allUsers.filter(user => user.status === true).forEach((activeUser) => {
+      cy.get('#user-list').contains(activeUser.name);
+      cy.get('#user-list').contains(activeUser.lastName);
+      cy.get('#user-list').contains(activeUser.email);
+      cy.get('#user-list').contains(activeUser.phoneNumber);
+      cy.get('#user-list').contains(activeUser.role.name === "ROLE_ADMIN" ? "Administrador" : "Usuario");
+    });
+  });
+
+  it('debe mostrar solo los usuarios inactivos cuando se selecciona "Inactivos"', () => {
+    // Seleccionamos la opción "Inactivos" en el filtro
+    cy.get('#Categoria').select('Inactivos');
+
+    // Verificamos que la tabla se actualice y solo se muestren los usuarios inactivos
+    cy.get('#user-list tr').should('have.length.greaterThan', 0); // Aseguramos que haya filas en la tabla
+
+    // Verificar que todos los usuarios en la tabla son inactivos
+    allUsers.filter(user => user.status === false).forEach((inactiveUser) => {
+      cy.get('#user-list').contains(inactiveUser.name);
+      cy.get('#user-list').contains(inactiveUser.lastName);
+      cy.get('#user-list').contains(inactiveUser.email);
+      cy.get('#user-list').contains(inactiveUser.phoneNumber);
+      cy.get('#user-list').contains(inactiveUser.role.name === "ROLE_ADMIN" ? "Administrador" : "Usuario");
+    });
+  });
+});

@@ -154,9 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   };
-  document.getElementById("Categoria").addEventListener("change", function (event) {
-    const statusFilter = event.target.value;
-    loadCategories(statusFilter);
-  });
+
 
 });
