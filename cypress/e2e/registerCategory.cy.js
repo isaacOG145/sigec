@@ -1,9 +1,9 @@
 describe('Formulario de Registro de Categoría', () => {
 
 
-  it('debe mostrar un mensaje de éxito si la categoría se guarda correctamente', () => {
+  it('Prueba de registro de categoria exitoso', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/categoryRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/categoryRegister.html');
     cy.get('#name').type('Nueva Categoría');
     cy.get('#description').type('Descripción de la nueva categoría');
     cy.get('#categoryForm').submit();
@@ -12,9 +12,9 @@ describe('Formulario de Registro de Categoría', () => {
     cy.get('#message-text').should('contain', 'Categoría de proyecto guardada exitosamente');
   });
 
-  it('debe mostrar un mensaje de éxito si la categoría se guarda correctamente', () => {
+  it('Prueba de registro de categoria que ya existe', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/categoryRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/categoryRegister.html');
     cy.get('#name').type('Nueva Categoría');
     cy.get('#description').type('Descripción de la nueva categoría nueva');
     cy.get('#categoryForm').submit();
@@ -23,7 +23,7 @@ describe('Formulario de Registro de Categoría', () => {
     cy.get('#message-text').should('contain', 'El nombre de la categoría ya está registrado');
   });
 
-  it('debe mostrar un mensaje de error en el nombre', () => {
+  it('Prueba de registro de categoria con nombre invalido', () => {
 
     cy.visit('http://127.0.0.1:8081/views/categoryRegister.html');
     cy.get('#name').type('&&&&&&&&');
@@ -34,9 +34,9 @@ describe('Formulario de Registro de Categoría', () => {
     cy.get('#message-text').should('contain', 'El nombre no puede contener carácteres especiales');
   });
 
-  it('debe mostrar un mensaje de éxito si la categoría se guarda correctamente', () => {
+  it('Prueba de registro de categoria con descripción invalida', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/categoryRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/categoryRegister.html');
     cy.get('#name').type('Nueva Categoría');
     cy.get('#description').type('&&&&&&&&&&&');
     cy.get('#categoryForm').submit();

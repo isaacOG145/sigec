@@ -1,4 +1,4 @@
-describe('Prueba de login exitoso', () => {
+describe('Prueba de inicio de sesión exitoso', () => {
   it('passes', () => {
 
     cy.visit('http://127.0.0.1:8081')
@@ -14,7 +14,7 @@ describe('Prueba de login exitoso', () => {
   })
 })
 
-describe('Prueba de login con usuario inactivo', () => {
+describe('Prueba de inicio de sesión con usuario inactivo', () => {
   it('Debería recibir un error 403 cuando las credenciales son incorrectas', () => {
 
     cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
@@ -35,7 +35,7 @@ describe('Prueba de login con usuario inactivo', () => {
 })
 
 
-describe('Prueba de login con contraseña incorrecta', () => {
+describe('Prueba de inicio de sesión con contraseña incorrecta', () => {
   it('Debería recibir un error 403 cuando las credenciales son incorrectas', () => {
 
     cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')

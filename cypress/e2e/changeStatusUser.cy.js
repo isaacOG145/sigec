@@ -1,4 +1,4 @@
-describe('Prueba de filtro de usuarios', () => {
+describe('Prueba de cambio de estado', () => {
   let allUsers; // Para almacenar todos los usuarios
 
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Prueba de filtro de usuarios', () => {
     });
   });
 
-  it('Prueba de filtro de usuarios activos', () => {
+  it('Prueba de cambio a incativo', () => {
     // Seleccionamos la opción "Activos" en el filtro
     cy.get('#Categoria').select('Activos');
 
@@ -26,10 +26,14 @@ describe('Prueba de filtro de usuarios', () => {
       cy.get('#user-list').contains(activeUser.email);
       cy.get('#user-list').contains(activeUser.phoneNumber);
       cy.get('#user-list').contains(activeUser.role.name === "ROLE_ADMIN" ? "Administrador" : "Usuario");
+
+      cy.get(':nth-child(1) > :nth-child(6) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado del usuario cambiado exitosamente.');
     });
   });
 
-  it('Prueba de filtro de usuarios inactivos', () => {
+  it('Prueba de cambio a activo', () => {
     // Seleccionamos la opción "Inactivos" en el filtro
     cy.get('#Categoria').select('Inactivos');
 
@@ -43,6 +47,11 @@ describe('Prueba de filtro de usuarios', () => {
       cy.get('#user-list').contains(inactiveUser.email);
       cy.get('#user-list').contains(inactiveUser.phoneNumber);
       cy.get('#user-list').contains(inactiveUser.role.name === "ROLE_ADMIN" ? "Administrador" : "Usuario");
+
+      cy.get(':nth-child(1) > :nth-child(6) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado del usuario cambiado exitosamente.');
     });
   });
 });
+

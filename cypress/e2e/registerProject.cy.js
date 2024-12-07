@@ -14,7 +14,7 @@ describe('Formulario de Registro de Proyecto', () => {
     cy.visit('http://127.0.0.1:8081/views/projectRegister.html');
   });
 
-  it('debe registrar un proyecto correctamente con datos válidos', () => {
+  it('Prueba de registro de proyecto exitosamente', () => {
     cy.request('GET', 'http://localhost:8080/customers/active').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.result.length).to.be.greaterThan(0);
@@ -40,7 +40,7 @@ describe('Formulario de Registro de Proyecto', () => {
     });
   });
 
-  it('debe registrar aparecer un error de al ingresar el nombre', () => {
+  it('Prueba de registro de proyecto con nombre invalido', () => {
     cy.request('GET', 'http://localhost:8080/customers/active').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.result.length).to.be.greaterThan(0);
@@ -66,7 +66,7 @@ describe('Formulario de Registro de Proyecto', () => {
     });
   });
 
-  it('debe registrar aparecer un error de al ingresar la abreviación', () => {
+  it('Prueba de registro de proyecto con abreviacion invalida', () => {
     cy.request('GET', 'http://localhost:8080/customers/active').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.result.length).to.be.greaterThan(0);
@@ -92,7 +92,7 @@ describe('Formulario de Registro de Proyecto', () => {
     });
   });
 
-  it('debe registrar aparecer un error de al ingresar la descripción', () => {
+  it('Prueba de registro de proyecto con descripción invalida', () => {
     cy.request('GET', 'http://localhost:8080/customers/active').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.result.length).to.be.greaterThan(0);
@@ -118,7 +118,7 @@ describe('Formulario de Registro de Proyecto', () => {
     });
   });
 
-  it('debe registrar enviar un mensaje de error al no ingresar categoria', () => {
+  it('Prueba de registro de proyecto con categoria faltante', () => {
     cy.request('GET', 'http://localhost:8080/customers/active').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.result.length).to.be.greaterThan(0);
@@ -143,7 +143,7 @@ describe('Formulario de Registro de Proyecto', () => {
     });
   });
 
-  it('debe registrar un proyecto correctamente con datos válidos', () => {
+  it('Prueba de registro de proyecto con cliente faltante', () => {
     cy.request('GET', 'http://localhost:8080/customers/active').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.result.length).to.be.greaterThan(0);

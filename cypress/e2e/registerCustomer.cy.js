@@ -1,5 +1,5 @@
 describe('Prueba de registro de cliente', () => {
-  it('Debe registrar un cliente correctamente', () => {
+  it('Prueba de registro de cliente exitoso', () => {
 
     cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
 

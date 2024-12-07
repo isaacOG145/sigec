@@ -1,6 +1,6 @@
 describe('Editar perfil', () => {
 
-  it('editar el nombre del usuario correctamente', () => {
+  it('Prueba de actualizacion de nombre exitosa', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -26,7 +26,7 @@ describe('Editar perfil', () => {
     cy.get('#message-text').should('contain', 'Perfil actualizado correctamente');
   })
 
-  it('Debe mostrar mensaje de error por el nombre', () => {
+  it('Prueba de actualizacion de nombre con nombre invalido', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -52,7 +52,7 @@ describe('Editar perfil', () => {
     cy.get('#message-text').should('contain', 'El nombre no puede contener cáracteres especiales');
   })
 
-  it('Debe mostrar mensaje de error por el apellido', () => {
+  it('Prueba de actualizacion con apellido invalido', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -78,7 +78,7 @@ describe('Editar perfil', () => {
     cy.get('#message-text').should('contain', 'El nombre no puede contener cáracteres especiales');
   })
 
-  it('Debe mostrar mensaje de error por el email', () => {
+  it('Prueba de actualizacion con email invalido', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -104,7 +104,7 @@ describe('Editar perfil', () => {
     cy.get('#message-text').should('contain', 'El correo debe ser válido');
   })
 
-  it('Debe mostrar mensaje de error por el telefono', () => {
+  it('Prueba de actualizacion con telefono invalido', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -130,7 +130,7 @@ describe('Editar perfil', () => {
     cy.get('#message-text').should('contain', 'El teléfono debe contener solo dígitos numéricos');
   })
 
-  it('Debe cambiar mostrar error porque no coinciden las contraseñas', () => {
+  it('Prueba de actualizacion con con contraseñas repetidas', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -159,7 +159,7 @@ describe('Editar perfil', () => {
     cy.get('#message-text').should('contain', 'Las contraseñas no coinciden.');
   })
 
-  it('Debe cambiar contraseña correctamente', () => {
+  it('Prueba de actualizacion de contraseña exitosa', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
@@ -193,7 +193,7 @@ describe('Editar perfil', () => {
     cy.url().should('include', 'http://127.0.0.1:8081')
   })
 
-  it('login con la nueva contraseña', () => {
+  it('Prueba de inicio de sesion con nueva contraseña', () => {
 
     cy.visit('http://127.0.0.1:8081')
 

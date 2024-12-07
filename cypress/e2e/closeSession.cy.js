@@ -1,11 +1,11 @@
-describe('cerrar sesion', () => {
+describe('Prueba de cierre sesion', () => {
   it('passes', () => {
 
     cy.visit('http://127.0.0.1:8081')
 
     cy.get('#email').type('admin@domain.com')
 
-    cy.get('#password').type('adminPassword')
+    cy.get('#password').type('newAdminPassword')
 
     cy.get('button[type="submit"]').click()
 

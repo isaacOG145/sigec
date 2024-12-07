@@ -1,4 +1,4 @@
-describe('Prueba de filtro de clientes', () => {
+describe('Prueba de cambio de estado de cliente', () => {
   let allClients;
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('Prueba de filtro de clientes', () => {
     });
   });
 
-  it('Prueba de filtro de clientes activos', () => {
+  it('Prueba de cambio a inactivo', () => {
     cy.get('#Categoria').select('Activos');
     cy.get('#customer-list tr').should('have.length.greaterThan', 0);
 
@@ -21,9 +21,13 @@ describe('Prueba de filtro de clientes', () => {
       cy.get('#customer-list').contains(activeClient.email);
       cy.get('#customer-list').contains(activeClient.phoneNumber);
     });
+
+    cy.get('.btn-sm').click();
+    cy.get('#message').should('be.visible');
+    cy.get('#message-text').should('contain', 'Estado del cliente actualizado correctamente');
   });
 
-  it('prueba de filtro de clientes inactivos', () => {
+  it('Prueba de cambio a activo', () => {
     cy.get('#Categoria').select('Inactivos');
     cy.get('#customer-list tr').should('have.length.greaterThan', 0);
 
@@ -31,6 +35,12 @@ describe('Prueba de filtro de clientes', () => {
       cy.get('#customer-list').contains(inactiveClient.name);
       cy.get('#customer-list').contains(inactiveClient.email);
       cy.get('#customer-list').contains(inactiveClient.phoneNumber);
+
+      cy.get(':nth-child(2) > :nth-child(4) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado del cliente actualizado correctamente');
     });
   });
+
+
 });

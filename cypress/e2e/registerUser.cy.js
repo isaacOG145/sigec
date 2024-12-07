@@ -1,9 +1,9 @@
 // cypress/e2e/registerUser.spec.js
 
 describe('Prueba de registro de usuario', () => {
-  it('Debe registrar un usuario correctamente', () => {
+  it('Prueba de registro de usuario correctamente', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/userRegister.html');
 
     cy.get('#name').type('Juan');
     cy.get('#lastName').type('Pérez');
@@ -27,9 +27,9 @@ describe('Prueba de registro de usuario', () => {
     cy.get('#rol').should('have.value', '');
   });
 
-  it('Debe mostrar un error si las contraseñas no coinciden', () => {
+  it('Prueba de registro de usuario con contraseñas sin coincidir', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/userRegister.html');
 
     cy.get('#name').type('Ana');
     cy.get('#lastName').type('Gómez');
@@ -45,9 +45,9 @@ describe('Prueba de registro de usuario', () => {
     cy.get('#message-text').should('contain', 'Las contraseñas no coinciden');
   });
 
-  it('Debe mostrar un error de que el telefono no es valido', () => {
+  it('Prueba de registro de usuario con telefono invalido', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/userRegister.html');
 
     cy.get('#name').type('Ana');
     cy.get('#lastName').type('Gómez');
@@ -63,9 +63,9 @@ describe('Prueba de registro de usuario', () => {
     cy.get('#message-text').should('contain', 'El teléfono debe contener solo dígitos numéricos');
   });
 
-  it('Debe mostrar un error de que el telefono ya registrado', () => {
+  it('Prueba de registro de usuario con telefono repetido', () => {
 
-    cy.visit('http://127.0.0.1:8081/sigec/views/userRegister.html');
+    cy.visit('http://127.0.0.1:8081/views/userRegister.html');
 
     cy.get('#name').type('Hector');
     cy.get('#lastName').type('Gónzales');

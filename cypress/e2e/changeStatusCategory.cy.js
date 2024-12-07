@@ -1,4 +1,4 @@
-describe('Prueba de filtro de categorías de proyectos', () => {
+describe('Prueba de cambio de estado de categorias', () => {
   let allCategories;
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('Prueba de filtro de categorías de proyectos', () => {
     });
   });
 
-  it('Prueba de filtro de categorias activas', () => {
+  it('Prueba de cambio a inactivo', () => {
     cy.get('#Categoria').select('Activos');
     cy.get('#category-list tr').should('have.length.greaterThan', 0);
 
@@ -20,10 +20,14 @@ describe('Prueba de filtro de categorías de proyectos', () => {
 
       cy.get('#category-list').contains(activeCategory.name);
       cy.get('#category-list').contains(activeCategory.description);
+
+      cy.get(':nth-child(1) > :nth-child(3) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado actualizado correctamente.');
     });
   });
 
-  it('prueba de filtro de categorias inactivas', () => {
+  it('prueba de cambio a activo', () => {
     cy.get('#Categoria').select('Inactivos');
     cy.get('#category-list tr').should('have.length.greaterThan', 0);
 
@@ -31,6 +35,10 @@ describe('Prueba de filtro de categorías de proyectos', () => {
 
       cy.get('#category-list').contains(inactiveCategory.name);
       cy.get('#category-list').contains(inactiveCategory.description);
+
+      cy.get(':nth-child(1) > :nth-child(3) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado actualizado correctamente.');
     });
   });
 });

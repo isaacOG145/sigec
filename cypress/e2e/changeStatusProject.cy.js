@@ -1,4 +1,4 @@
-describe('Prueba de filtro de proyectos', () => {
+describe('Prueba de cambio de estado', () => {
   let allProjects;
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('Prueba de filtro de proyectos', () => {
     });
   });
 
-  it('Prueba de filtro de proyectos activos', () => {
+  it('Prueba de cambio a inactivo', () => {
     cy.get('#Categoria').select('Activos');
     cy.get('#projects-list tr').should('have.length.greaterThan', 0);
 
@@ -23,12 +23,16 @@ describe('Prueba de filtro de proyectos', () => {
       cy.get('#projects-list').contains(activeProject.description);
       cy.get('#projects-list').contains(activeProject.customer.name);
       cy.get('#projects-list').contains(activeProject.projectCategory.name);
+
+      cy.get(':nth-child(1) > :nth-child(6) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado actualizado correctamente.');
     });
   });
 
-  it('Prueba de filtro de proyectos inactivos', () => {
-    cy.get('#Categoria').select('Inactivos'); // Seleccionamos el filtro "Inactivos"
-    cy.get('#projects-list tr').should('have.length.greaterThan', 0); // Verifica que hay proyectos en la lista
+  it('Prueba de cambio a activo', () => {
+    cy.get('#Categoria').select('Inactivos');
+    cy.get('#projects-list tr').should('have.length.greaterThan', 0);
 
     // Filtramos los proyectos inactivos
     allProjects.filter(project => project.status === false).forEach((inactiveProject) => {
@@ -38,6 +42,10 @@ describe('Prueba de filtro de proyectos', () => {
       cy.get('#projects-list').contains(inactiveProject.description);
       cy.get('#projects-list').contains(inactiveProject.customer.name);
       cy.get('#projects-list').contains(inactiveProject.projectCategory.name);
+
+      cy.get(':nth-child(1) > :nth-child(6) > .btn-sm').click();
+      cy.get('#message').should('be.visible');
+      cy.get('#message-text').should('contain', 'Estado actualizado correctamente.');
     });
   });
 });
