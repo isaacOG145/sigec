@@ -27,15 +27,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 5000);
   }
 
-  // Manejar el envío del formulario de cambio de contraseña
   changePasswordForm.addEventListener('submit', async function (event) {
-    event.preventDefault();  // Evita el envío tradicional del formulario
+    event.preventDefault();
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
     const confirmPassword = document.getElementById('confirm-password').value.trim();
 
-    // Validación de contraseñas
     if (!password || password.length < 6) {
       showMessage('warning', 'La contraseña debe tener al menos 6 caracteres.');
       return;

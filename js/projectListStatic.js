@@ -1,10 +1,22 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   function loadProjects(statusFilter = "") {
     const projectsList = document.getElementById("projects-list");
     projectsList.innerHTML = "";
 
-    fetch(`http://localhost:8080/projects/all`)
+    fetch(`http://localhost:8080/projects/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

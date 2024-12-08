@@ -1,3 +1,9 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
   const messageText = document.getElementById("message-text");
@@ -13,14 +19,20 @@ function showMessage(type, message) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  let currentStatusFilter = "";
+
 
   function loadCategories(statusFilter = "") {
-    currentStatusFilter = statusFilter;
+
     const categoryList = document.getElementById("category-list");
     categoryList.innerHTML = "";
 
-    fetch(`http://localhost:8080/projectCat/all`)
+    fetch(`http://localhost:8080/projectCat/all`  , {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Error al obtener categorías');
@@ -54,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error al cargar las categorías:", error);
-        showMessage('danger', "Hubo un problema al cargar las categorías.");
+        showMessage('danger', "No se encontraron datos de categorías.");
       });
   }
 
@@ -65,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(projectCatDto),
     })
@@ -72,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         if (data.type === "SUCCESS") {
           // Recargamos con el filtro actual
-          loadCategories(currentStatusFilter);
+          loadCategories();
           showMessage('success', "Estado actualizado correctamente.");
         } else {
           showMessage('warning', data.text);
@@ -83,13 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
         showMessage('danger', "Hubo un problema al cambiar el estado del proyecto.");
       });
   };
-
-  loadCategories();
-
-  document.getElementById("Categoria").addEventListener("change", function (event) {
-    const statusFilter = event.target.value;
-    loadCategories(statusFilter);
-  });
 
   window.editCategory = function (categoryId, button) {
     const row = button.closest('tr');
@@ -136,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(updatedCategory),
       })
@@ -154,9 +161,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   };
+
+  loadCategories();
+
   document.getElementById("Categoria").addEventListener("change", function (event) {
     const statusFilter = event.target.value;
     loadCategories(statusFilter);
   });
+
 
 });

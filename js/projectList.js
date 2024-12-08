@@ -1,3 +1,9 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
   const messageText = document.getElementById("message-text");
@@ -18,7 +24,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const projectsList = document.getElementById("projects-list");
     projectsList.innerHTML = "";
 
-    fetch(`http://localhost:8080/projects/all`)
+    fetch(`http://localhost:8080/projects/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         const projects = data.result;
@@ -53,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error al cargar los proyectos:", error);
-        showMessage('danger', "Hubo un problema al cargar los proyectos.");
+        showMessage('danger', "No se encontraron datos de proyectos.");
       });
   }
 
@@ -64,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(projectDto),
     })
@@ -82,16 +95,16 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   };
 
-  loadProjects();
-
-  document.getElementById("Categoria").addEventListener("change", function (event) {
-    const statusFilter = event.target.value;
-    loadProjects(statusFilter);
-  });
 
   function loadCategoriesAndClients() {
     return Promise.all([
-      fetch("http://localhost:8080/projectCat/active")
+      fetch("http://localhost:8080/projectCat/active" , {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
         .then(response => response.json())
         .then(data => {
           if (data.type === 'SUCCESS' && Array.isArray(data.result)) {
@@ -104,7 +117,13 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error('Error al cargar categorías:', error);
           return [];
         }),
-      fetch("http://localhost:8080/customers/active")
+      fetch("http://localhost:8080/customers/active" , {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
         .then(response => response.json())
         .then(data => {
           if (data.type === 'SUCCESS' && Array.isArray(data.result)) {
@@ -222,6 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(updatedProject),
       })
@@ -241,9 +261,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
+  loadProjects();
+
   document.getElementById("Categoria").addEventListener("change", function (event) {
     const statusFilter = event.target.value;
     loadProjects(statusFilter);
   });
+
 
 });
