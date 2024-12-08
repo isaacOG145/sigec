@@ -1,6 +1,10 @@
 const form = document.getElementById('categoryForm');
 const token = localStorage.getItem('jwt');
 
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
   const messageText = document.getElementById("message-text");

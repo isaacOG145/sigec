@@ -1,6 +1,9 @@
-const jwt = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
 
-// Función para mostrar mensajes
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
   const messageText = document.getElementById("message-text");
@@ -20,20 +23,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // Función para cargar los clientes
   function loadCustomers(statusFilter = "") {
     const customerList = document.getElementById("customer-list");
-    customerList.innerHTML = ""; // Limpiar la tabla antes de cargar los nuevos datos
+    customerList.innerHTML = "";
 
-    // Hacer fetch de la API para obtener los datos
-    fetch(`http://localhost:8080/customers/all`)
+    fetch("http://localhost:8080/customers/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         const customers = data.result;
 
-        // Filtrar clientes por estado si se proporciona un filtro
         const filteredCategories = statusFilter
           ? customers.filter((customer) => customer.status === (statusFilter === "Activos"))
           : customers;
 
-        // Crear filas de la tabla para cada cliente
+
         filteredCategories.forEach((customer) => {
           const tr = document.createElement("tr");
 
@@ -58,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error al cargar los clientes:", error);
-        showMessage("danger", "Hubo un problema al cargar los clientes.");
+        showMessage("danger", "No se encontraron datos de clientes.");
       });
   }
 
@@ -70,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(customerDto),
     })
@@ -147,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(updatedCustomer),
       })

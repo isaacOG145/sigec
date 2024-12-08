@@ -1,6 +1,18 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  fetch('http://localhost:8080/projectCat/active')
+  fetch('http://localhost:8080/projectCat/active', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  })
     .then(response => response.json())
     .then(data => {
       const categoriaSelect = document.getElementById('category');
@@ -23,7 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // Cargar los clientes activos
-  fetch('http://localhost:8080/customers/active')
+  fetch('http://localhost:8080/customers/active' , {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  })
     .then(response => response.json())
     .then(data => {
       const clienteSelect = document.getElementById('customer');
@@ -78,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requiredFields.forEach(field => {
       if (!formObject[field]) {
-        isValid = false;
+        isValid = false;0
         missingFields.push(field);
       }
     });
@@ -93,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(formObject),
     })

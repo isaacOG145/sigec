@@ -1,3 +1,9 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   function loadCustomers(statusFilter = "") {
@@ -5,7 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
     customerList.innerHTML = "";
 
     // Hacer fetch de la API
-    fetch(`http://localhost:8080/customers/all`)
+    fetch(`http://localhost:8080/customers/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

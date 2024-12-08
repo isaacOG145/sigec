@@ -1,3 +1,9 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
   const messageText = document.getElementById("message-text");
@@ -19,7 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
     userList.innerHTML = "";
 
     // Hacer fetch de la API
-    fetch(`http://localhost:8080/user/all`)
+    fetch(`http://localhost:8080/user/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         const users = data.result;
@@ -52,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       })
       .catch((error) => {
-        showMessage("danger", "Error al cargar los usuarios.");
+        showMessage("danger", "No se encontraron datos de usuarios");
       });
   }
 
@@ -63,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(userDto),
     })
@@ -145,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(updatedUser),
       })

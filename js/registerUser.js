@@ -1,4 +1,9 @@
 const form = document.getElementById('userForm');
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
 
 function showMessage(type, message) {
   const messageElement = document.getElementById("message");
@@ -58,6 +63,7 @@ form.addEventListener('submit', async (event) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(userData),
     });

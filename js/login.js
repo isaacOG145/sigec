@@ -60,13 +60,20 @@ loginForm.addEventListener('submit', async (event) => {
 
     const data = await response.json();
 
+    const { jwt, userId, role, expiration } = data;
+
     localStorage.setItem('jwt', data.jwt);
     localStorage.setItem('userId', data.userId);
     localStorage.setItem('email',email);
-    localStorage.setItem('rol', role);
+    localStorage.setItem('role', role);
     localStorage.setItem('expiration', Date.now() + data.expiration);
 
-    window.location.href = 'views/projectList.html';
+    if(localStorage.getItem('role') == 'ROLE_ADMIN') {
+      window.location.href = '../views/projectList.html';
+    }else{
+      window.location.href = '../views/projectListStatic.html';
+    }
+
 
   } catch (error) {
 

@@ -1,11 +1,23 @@
+const token = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+
+if (!token) {
+  window.location.href = '../index.html';
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   function loadUsers(statusFilter = "") {
     const userList = document.getElementById("user-list");
     userList.innerHTML = "";
 
-    // Hacer fetch de la API
-    fetch(`http://localhost:8080/user/all`)
+
+    fetch(`http://localhost:8080/user/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -36,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       })
       .catch((error) => {
-        console.error("Error al cargar los usuarios:", error);
+        console.error("No se encontraron datos de usuarios", error);
       });
   }
 
