@@ -9,10 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.location.href = '../index.html';
   }
 
-  if (!token) {
-    window.location.href = '../index.html';
-  }
-
   const changePasswordForm = document.getElementById('change-password-form');
   const messageElement = document.getElementById('message');
   const messageText = document.getElementById('message-text');

@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       showMessage('info', 'Verificando código, por favor espera...');
 
-      const response = await fetch('http://localhost:8080/verify-code', {
-        method: 'PUT',
+      const response = await fetch('http://localhost:8080/user/verify-code', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: email, code: code })
+        body: JSON.stringify({ email: email, code: code})
       });
 
       const result = await response.json();
@@ -70,12 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.ok) {
         showMessage('success', 'Código verificado correctamente. Ahora puedes cambiar tu contraseña.', email);
 
-        localStorage.setItem('jwt', result.jwt);
-        localStorage.setItem('userId', result.userId);
-        localStorage.setItem('email', result.email);
-        localStorage.setItem('expiration', Date.now() + result.expiration);
-
-        console.log('JWT Token:', localStorage.getItem('jwt'));
+        localStorage.setItem('email', email);
 
         window.location.href = `../views/changePass.html?email=${encodeURIComponent(email)}`;
       } else {
