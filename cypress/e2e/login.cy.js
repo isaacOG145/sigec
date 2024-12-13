@@ -1,7 +1,10 @@
+//ip en pc de axel "http: //localhost:8081"
+//ip en pc de isaac http: //127.0.0.1:8081
+
 describe('Prueba de inicio de sesión exitoso', () => {
   it('passes', () => {
 
-    cy.visit('http://127.0.0.1:8081')
+    cy.visit('http://localhost:8081')
 
     cy.get('#email').type('admin@domain.com')
 
@@ -19,7 +22,7 @@ describe('Prueba de inicio de sesión con usuario inactivo', () => {
 
     cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
 
-    cy.visit('http://127.0.0.1:8081')
+    cy.visit('http://localhost:8081')
 
     cy.get('#email').type('admin@domain.com')
 
@@ -40,7 +43,7 @@ describe('Prueba de inicio de sesión con contraseña incorrecta', () => {
 
     cy.intercept('POST', 'http://localhost:8080/login').as('loginRequest')
 
-    cy.visit('http://127.0.0.1:8081')
+    cy.visit('http://localhost:8081')
 
     cy.get('#email').type('admin@domain.com')
 

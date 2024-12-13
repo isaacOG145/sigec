@@ -4,7 +4,7 @@ describe('Prueba de filtro de proyectos', () => {
   beforeEach(() => {
 
     cy.intercept('GET', 'http://localhost:8080/projects/all').as('getProjects');
-    cy.visit('http://127.0.0.1:8081/views/projectList.html');
+    cy.visit('http://localhost:8081/views/projectList.html');
 
     cy.wait('@getProjects').then((interception) => {
       allProjects = interception.response.body.result;

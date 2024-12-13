@@ -4,7 +4,7 @@ describe('Prueba de cambio de estado de categorias', () => {
   beforeEach(() => {
 
     cy.intercept('GET', 'http://localhost:8080/projectCat/all').as('getCategories');
-    cy.visit('http://127.0.0.1:8081/views/categoryList.html');
+    cy.visit('http://localhost:8081/views/categoryList.html');
 
     cy.wait('@getCategories').then((interception) => {
       allCategories = interception.response.body.result;

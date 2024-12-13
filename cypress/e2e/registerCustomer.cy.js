@@ -1,7 +1,7 @@
 describe('Prueba de registro de cliente', () => {
   it('Prueba de registro de cliente exitoso', () => {
 
-    cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
+    cy.visit('http://localhost:8081/views/customerRegister.html');
 
 
     cy.get('#name').type('Juan Pérez');
@@ -23,7 +23,7 @@ describe('Prueba de registro de cliente', () => {
 describe('Prueba de registro de cliente con correo repetido', () => {
   it('Debe dar un mensaje de correo registrado', () => {
 
-    cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
+    cy.visit('http://localhost:8081/views/customerRegister.html');
 
 
     cy.get('#name').type('Juan Pérez Valle');
@@ -42,7 +42,7 @@ describe('Prueba de registro de cliente con correo repetido', () => {
 describe('Prueba de nombre con caracteres especiales', () => {
   it('Debe dar un mensaje de error sobre el nombre ', () => {
 
-    cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
+    cy.visit('http://localhost:8081/views/customerRegister.html');
 
 
     cy.get('#name').type('&&&&&&&&&&');
@@ -61,7 +61,7 @@ describe('Prueba de nombre con caracteres especiales', () => {
 describe('Prueba de correo invalido', () => {
   it('Debe dar un mensaje de error sobre correo invalido', () => {
 
-    cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
+    cy.visit('http://localhost:8081/views/customerRegister.html');
 
 
     cy.get('#name').type('juan perez valle');
@@ -80,7 +80,7 @@ describe('Prueba de correo invalido', () => {
 describe('Prueba de numero de telefono invalido', () => {
   it('Debe dar un mensaje de error sobre telefono invalido', () => {
 
-    cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
+    cy.visit('http://localhost:8081/views/customerRegister.html');
 
 
     cy.get('#name').type('Daniel Perez Juarez');
@@ -99,7 +99,7 @@ describe('Prueba de numero de telefono invalido', () => {
 describe('Prueba de numero de telefono excediendo limite de caracteres', () => {
   it('Debe dar un mensaje de error sobre telefono pasando el numero de caracteres', () => {
 
-    cy.visit('http://127.0.0.1:8081/views/customerRegister.html');
+    cy.visit('http://localhost:8081/views/customerRegister.html');
 
 
     cy.get('#name').type('Daniel Perez Juarez');

@@ -4,7 +4,7 @@ describe('Prueba de cambio de estado', () => {
   beforeEach(() => {
     // Interceptamos la solicitud de los usuarios para poder verificar la respuesta
     cy.intercept('GET', 'http://localhost:8080/user/all').as('getUsers');
-    cy.visit('http://127.0.0.1:8081/views/userList.html'); // Asegúrate de que la URL sea correcta
+    cy.visit('http://localhost:8081/views/userList.html'); // Asegúrate de que la URL sea correcta
 
     // Esperamos que se carguen los usuarios
     cy.wait('@getUsers').then((interception) => {
